@@ -7,7 +7,7 @@
 __asm__(".code16gcc\n"); // running in real mode requires
 
 #include "detect.h"
-#include <inttypes.h>
+#include <stdint.h>
 
 int __attribute__((noinline)) __attribute__((regparam(3))) detectMemory(SMAP_entry_t *buffer, int maxentries)
 {

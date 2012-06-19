@@ -4,12 +4,13 @@
  *
  */
 
+#include <mem/detect.h>
+#include <tty/console.h>
 
 #define halt() for(;;);
 
 int xnix_main(multiboot_info *mbt, unsigned int magic)
 {
-
 	// loop forever to keep the system alive
 	for (;;);
 }

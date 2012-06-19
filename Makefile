@@ -2,12 +2,12 @@
 # Written by Aaron Blakely <aaron@ephasic.org>
 #
 
-CSOURCES	= console.c iomem.c mem/detec.c xnix.c cpu/IA32/*.c
+CSOURCES	= tty/console.c io/iomem.c mem/detec.c xnix.c cpu/IA32/*.c
 ASOURCES	= cpu/IA32/*.s cpu/IA32/boot/*.s cpu IA32/boot/prep/*.s
 OBJS		= $(patsubst %.s, %.o, $(SOURCES:%.c=%.o))
 CS		= gcc
 AS		= nasm
-INCLUDEDIRS	= -I./kernel/lib -I./kernel/mem -I./kernel/cpu/IA32 -I./kernel/cpu/IA32/boot -I./kernel/tty
+INCLUDEDIRS	= -I./kernel/lib -I./kernel/mem -I./kernel/cpu/IA32 -I./kernel/cpu/IA32/boot -I./kernel/tty -I./kernel
 CFLAGS		= -m32 -Wall -02 -fstrength-reduce -fomit-frame-pointer -finline-functions -nostdinc -fno-builtin -fno-stack-pointer $(INCLUDEDIRS)
 LDFLAGS		= -T./etc/link.ld -melf
 ASFLAGS		= -felf
