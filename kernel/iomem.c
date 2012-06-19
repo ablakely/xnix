@@ -4,7 +4,8 @@
  *
  */
 
-#include "lib/iomem.h"
+#include <iomem.h>
+#include <inttypes.h>
 
 void outportb(u16int port, u8int val)
 {

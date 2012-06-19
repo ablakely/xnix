@@ -4,7 +4,8 @@
  *
  */
 
-#include "lib/console.h"
+#include <console.h>
+#include <inttypes.h>
 
 // VGA Framebuffer memory starts at 0xB8000
 u16int *vram = (u16int *)0xB8000;
