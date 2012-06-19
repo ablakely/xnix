@@ -11,7 +11,7 @@ __asm__(".code16gcc\n"); // running in real mode requires
 
 int __attribute__((noinline)) __attribute__((regparam(3))) detectMemory(SMAP_entry_t *buffer, int maxentries)
 {
-	uint32 countID = 0;
+	u32int countID = 0;
 	int entries = 0, signature, bytes;
 	do
 	{
