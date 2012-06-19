@@ -12,4 +12,4 @@ typedef struct SMAP_entry {
 	u16int	ACPI;
 } __attribute__((packed)) SMAP_entry_t;
 
-#endif DETECT_H
+#endif
