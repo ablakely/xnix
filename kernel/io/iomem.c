@@ -69,3 +69,13 @@ int strlen(char *str)
 	str = s;
 	return i;
 }
+
+char *strcpy(char *dest, const char *src)
+{
+	char *save = dest;
+	while (*src != 0)
+	{
+		*dest++ = *src++;
+	}
+	return save;
+}

@@ -10,6 +10,7 @@
 #include <tty/console.h>
 #include <tty/colors.h>
 
+extern void gdt_flush();
 struct gdt_entry gdt[3];
 struct gdt_ptr   gp;
 

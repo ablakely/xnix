@@ -1,27 +1,29 @@
 ENTRY(start)
+phys = 0x001000000;
+
 SECTIONS
 {
-	.text 0x10000000 :
+	.text phys : AT(phys)
 	{
-		code = .; __code = .;
+		code = .;
 		*(.text)
+		*(.rodata)
 		. = ALIGN(4096);
 	}
 
-	.data :
+	.data : AT(phys + (data - code))
 	{
-		data = .; __data = .;
+		data = .;
 		*(.data)
-		*(.rodata)
 		. = ALIGN(4096);
 	}
 
 	.bss :
 	{
-		bss = .; __bss = .;
+		bss = .;
 		*(.bss)
 		. = ALIGN(4096);
 	}
 
-	end = .; _end = .; __end = .;
+	end = .;
 }

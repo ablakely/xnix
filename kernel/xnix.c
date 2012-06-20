@@ -26,7 +26,7 @@ int xnix_main()
 	isrs_install();		// install the ISRs
 	irq_install();		// install the IRQs
 	keyboard_install();	// install the keboard
-	putc("\n");
+	print("\n");
 
 	// loop forever to keep the system alive
 	for (;;);

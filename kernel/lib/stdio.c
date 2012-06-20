@@ -4,10 +4,12 @@
  *
  */
 
-#include <tty/console.h>
-#include <tty/colors.h>
 #include "stdint.h"
 #include "stdio.h"
+#include "stdlib.h"
+#include <iomem.h>
+#include <tty/console.h>
+#include <tty/colors.h>
 
 // VA_LIST stuff
 #ifndef VA_LIST
@@ -33,86 +35,6 @@ void printc(char *c, u8int bg, u8int fg)
 	{
 		put_c(c[i++], bg, fg);
 	}
-}
-
-void print_to_point(char *text, u8int column, u8int line, u8int backColor, u8int foreColor)
-{
-	set_cursor_point(column-1, line-1);
-	printc(text, backColor, foreColor);
-	set_cursor_point(cursor.prev_x. cursor.prev->y);
-	put(0x20);
-	put(0x08);
-}
-
-void console_writehex(u32int n)
-{
-	s32int tmp;
-	print("0x");
-	char noZeros = 1;
-
-	int i;
-	for (i = 28; i > 0; i -= 4)
-	{
-		tmp = (n >> i) & 0xF;
-		if (tmp == 0 && noZeros != 0)
-		{
-			continue;
-		}
-		if (tmp >= 0xA)
-		{
-			noZeros = 0;
-			put(tmp-0xA+'a')'
-		}
-		else {
-			noZeros = 0;
-			put(tmp+'0');
-		}
-	}
-
-	tmp = n & 0xF;
-	if (tmp >= 0xA)
-	{
-		put(tmp-0xA+'a');
-	}
-	else {
-		put(tmp+'0');
-	}
-}
-
-void console_writedec(u32int n)
-{
-	if (n == 0)
-	{
-		print("0");
-		return;
-	}
-
-	s32int acc = n;
-	char c[32];
-	int i = 0;
-
-	while (acc > 0)
-	{
-		c[i] = '0' + acc % 10;
-		acc /= 10;
-		i++;
-	}
-	c[i] = 0;
-
-	char c2[32];
-	c2[i--] = 0;
-	int j = 0;
-	while(i >= 0)
-	{
-		c2[i--] = c[j++];
-	}
-	print(c2);
-}
-
-void puts(char *c)
-{
-	kprint(c);
-	kprint("\n");
 }
 
 void error(char *c)
@@ -155,7 +77,7 @@ void printf(char const *fmt, ...)
 			else {
 				if (chr == 'd')
 				{
-					put('d')
+					put('d');
 				}
 				else {
 					put('i');
@@ -229,7 +151,7 @@ void printf(char const *fmt, ...)
 			if (state == 1)
 			{
 				double tmp__ = va_arg(args, double);
-				char *tmmmp;
+				char *tmmp;
 				print(dtostr(tmp__, tmmp, 0));
 			}
 			else {
@@ -280,7 +202,7 @@ char *sprintf(char *str, char const *fmt, ...)
 			case 'd':
 				if (state == 1)
 				{
-					char *tmp;
+					char *temp;
 					itoa(va_arg(args, int), temp, 10);
 					while (temp != '\0') *str++ = *temp++;
 				}

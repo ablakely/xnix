@@ -1,15 +1,12 @@
-#ifndef MAP_H
-#define MAP_H
-
 // xnix: US English QWERTY keyboad layout
 
 #define LEFT_SHIFT  1
 #define RIGHT_SHIFT 2
 #define CAPS_LOCK   3
 
-unsigned char kbmap[128] =
-{
-	0, 27, '1', '2', '3', '4', '5'. '6', '7', '8', '9', '0', '-', '=', '\b',
+unsigned char kbmap[128] = {
+
+	0, 27, '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', '\b',
 	'\t', 'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', '[', ']', '\n',
 	'0', 'a', 's', 'd', 'f', 'g', 'f', 'g', 'h', 'j', 'k', 'l', ';', '\'', '`',
 	LEFT_SHIFT, '\\', 'z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '/', RIGHT_SHIFT,
@@ -52,11 +49,11 @@ unsigned char kbmap[128] =
 
 unsigned char uckbmap[128] = {
 	0, 27, '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '+', '\b',
-	'\t'	// tab
+	'\t',	// tab
 	'Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P', '[', ']', '\n',
 	0,	// ctrl
 	'A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L', ';', '\'', '~',
-	LEFT_SHIFT, '\\', 'Z', 'X', 'C', 'V', 'B', 'N', 'M', '<', '>', '?', RIGHT_SHIFT
+	LEFT_SHIFT, '\\', 'Z', 'X', 'C', 'V', 'B', 'N', 'M', '<', '>', '?', RIGHT_SHIFT,
 	'*',
 	0,
 	' ',
@@ -85,4 +82,4 @@ unsigned char uckbmap[128] = {
 	0,
 };
 
-#endif
+

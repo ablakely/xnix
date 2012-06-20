@@ -26,7 +26,7 @@ void idt_set_gate(unsigned char num, unsigned long base, unsigned short sel, uns
 void idt_install()
 {
 	printc("Installing ", BLACK, LIGHT_GREEN);
-	printc("IDT\n", BLACK, LIGHT_CYAN);
+	printc("IDT\n", BLACK, LIGHT_RED);
 
 	idtp.limit	= (sizeof (struct idt_entry) * 256) - 1;
 	idtp.base	= (int)&idt;

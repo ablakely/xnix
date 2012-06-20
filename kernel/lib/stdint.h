@@ -10,5 +10,6 @@ typedef unsigned short u16int;
 typedef          short s16int;
 typedef unsigned char  u8int;
 typedef          char  s8int;
+typedef          int   bool;
 
 #endif

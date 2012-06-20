@@ -21,7 +21,7 @@ int irq_install_handler(int irq, void (*handler)(struct regs *r), char *handler_
 	printc("Installing ", BLACK, LIGHT_GREEN);
 	printc("IRQ Handler: ", BLACK, GREEN);
 	printc(handler_name, BLACK, LIGHT_CYAN);
-	putc("\n");
+	printc("\n");
 
 	if (irq > 15)
 	{

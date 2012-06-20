@@ -1,4 +1,3 @@
-[BITS 32]
 global gdt_flush
 extern gp				; from gdt.c
 

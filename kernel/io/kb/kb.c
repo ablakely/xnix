@@ -12,7 +12,11 @@
 #include <tty/console.h>
 #include <tty/colors.h>
 
-state = 0;
+#define LEFT_SHIFT  1
+#define RIGHT_SHIFT 2
+#define CAPS_LOCK   3
+
+int state = 0;
 
 void keyboard_handler(struct regs *r)
 {
