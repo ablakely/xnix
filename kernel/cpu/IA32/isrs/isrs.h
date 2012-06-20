@@ -1,6 +1,8 @@
 #ifndef ISRS_H
 #define ISRS_H
 
+#include <iomem.h>
+
 extern void _isr0();
 extern void _isr1();
 extern void _isr2();
@@ -35,43 +37,6 @@ extern void _isr30();
 extern void _isr31();
 
 void isrs_install();
-
-char *exception_messages[] =
-{
-	"Division by Zero",
-	"Debug",
-	"Non-Maskable Interrupt",
-	"Breakpoint",
-	"Into Detected Overflow",
-	"Out of Bounds",
-	"Invalid Opcode",
-	"No Coprocessor",
-	"Double Fault",
-	"Coprocessor Segment Overrun",
-	"Bad TSS",
-	"Segment Not Present",
-	"Stack Fault",
-	"General Protection Fault",
-	"Page Fault",
-	"Unkown Interrupt",
-	"Coprocessor Fault",
-	"Alignment Check",
-	"Machine Check",
-	"Reserved",
-	"Reserved",
-	"Reserved",
-	"Reserved",
-	"Reserved",
-	"Reserved",
-	"Reserved",
-	"Reserved",
-	"Reserved",
-	"Reserved",
-	"Reserved",
-	"Reserved",
-	"Reserved"
-};
-
 void fault_handler(struct regs *r);
 
 #endif

@@ -6,8 +6,8 @@
 
 #include <tty/console.h>
 #include <tty/colors.h>
-#include <stdint.h>
-#include <stdio.h>
+#include "stdint.h"
+#include "stdio.h"
 
 // VA_LIST stuff
 #ifndef VA_LIST

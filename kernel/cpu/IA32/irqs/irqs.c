@@ -7,16 +7,29 @@
 #include "irqs.h"
 #include <iomem.h>
 #include <tty/console.h>
+#include <tty/colors.h>
 #include <cpu/IA32/idt/idt.h>
 
-void irq_install_handler(int irq, void (*handler)(struct regs *r), char *handler_name)
+void *irq_routines[16] = {
+        0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 0
+};
+
+
+int irq_install_handler(int irq, void (*handler)(struct regs *r), char *handler_name)
 {
 	printc("Installing ", BLACK, LIGHT_GREEN);
 	printc("IRQ Handler: ", BLACK, GREEN);
 	printc(handler_name, BLACK, LIGHT_CYAN);
 	putc("\n");
 
-	irq_routines[irq] = handlers;
+	if (irq > 15)
+	{
+		return -1;
+	}
+
+	irq_routines[irq] = handler;
+	return 0;
 }
 
 void irq_uninstall_handler(int irq)

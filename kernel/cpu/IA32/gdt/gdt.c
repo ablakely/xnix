@@ -6,6 +6,7 @@
 
 #include "gdt.h"
 #include <iomem.h>
+#include <stdio.h>
 #include <tty/console.h>
 #include <tty/colors.h>
 

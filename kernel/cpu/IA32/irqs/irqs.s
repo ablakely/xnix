@@ -21,7 +21,7 @@ _irq0:
 	cli
 	push	byte 0
 	push	byte 32
-	jmp	irq_commom_stub
+	jmp	irq_common_stub
 
 _irq1:
 	cli

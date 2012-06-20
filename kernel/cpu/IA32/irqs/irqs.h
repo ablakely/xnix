@@ -1,6 +1,8 @@
 #ifndef IRQS_H
 #define IRQS_H
 
+#include <iomem.h>
+
 extern void _irq0();
 extern void _irq1();
 extern void _irq2();
@@ -18,13 +20,7 @@ extern void _irq13();
 extern void _irq14();
 extern void _irq15();
 
-void *irq_routines[16] =
-{
-	0, 0, 0, 0, 0, 0, 0, 0,
-	0, 0, 0, 0, 0, 0, 0, 0
-};
-
-void irq_install_handler(int irq, void (*handler)(struct regs *r), char *handler_name);
+int irq_install_handler(int irq, void (*handler)(struct regs *r), char *handler_name);
 void irq_uninstall_handler(int irq);
 void irq_remap(void);
 void irq_install();

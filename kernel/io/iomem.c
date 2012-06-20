@@ -34,7 +34,7 @@ u16int inportw(u16int port)
 	return ret;
 }
 
-void memcpy(void *dest, const void *src, u32int len)
+void *memcpy(void *dest, const void *src, u32int len)
 {
 	// a /fast/ memcpy implementation
 	char *dst = (char *)dest;
@@ -47,7 +47,7 @@ void memcpy(void *dest, const void *src, u32int len)
 	return dest;
 }
 
-void memset(void *dest, void val, u32int len)
+void *memset(void *dest, void *val, u32int len)
 {
 	// a /fast/ memset implementation
 	char *dst = (char *)dest;

@@ -16,9 +16,9 @@
 
 #define halt() for(;;);
 
-int xnix_main(multiboot_info *mbt, unsigned int magic)
+int xnix_main()
 {
-	clear_vram();		// clear what's left in the vram
+	init_console();
 	print("xnix: 0.0.1 by Aaron Blakely.  Starting.\n\n");
 
 	gdt_install();		// install the gdt

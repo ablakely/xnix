@@ -1,6 +1,5 @@
 #ifndef CONSOLE_H
 #define CONSOLE_H
-
 #include <stdint.h>
 
 struct cursor_info {
@@ -12,6 +11,7 @@ struct cursor_info {
 	u8int foreColor;
 };
 
+void init_console();
 static void move_cursor();
 void set_cursor_point(u8int x, u8int y);
 static void scroll();
