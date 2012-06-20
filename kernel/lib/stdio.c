@@ -44,7 +44,7 @@ void print_to_point(char *text, u8int column, u8int line, u8int backColor, u8int
 	put(0x08);
 }
 
-void console_hexwrite(u32int n)
+void console_writehex(u32int n)
 {
 	s32int tmp;
 	print("0x");

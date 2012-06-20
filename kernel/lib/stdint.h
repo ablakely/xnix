@@ -1,5 +1,5 @@
-#ifndef INTTYPES_H
-#define INTTYPES_H
+#ifndef STDINT_H
+#define STDINT_H
 
 // some typedefs to make things a little more sane
 // written on X86 (32bit)

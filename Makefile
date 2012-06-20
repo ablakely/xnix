@@ -1,8 +1,9 @@
 # xnix: build file
 # Written by Aaron Blakely <aaron@ephasic.org>
 #
+# NOTICE: This makefile is broken.
 
-CSOURCES	= tty/console.c io/iomem.c mem/detec.c xnix.c cpu/IA32/*.c
+CSOURCES	= tty/console.c lib/stdio.c io/iomem.c mem/detect.c xnix.c cpu/IA32/*.c
 ASOURCES	= cpu/IA32/*.s cpu/IA32/boot/*.s cpu IA32/boot/prep/*.s
 OBJS		= $(patsubst %.s, %.o, $(SOURCES:%.c=%.o))
 CS		= gcc
@@ -24,7 +25,7 @@ link:
 
 %.s:
 	@echo "running assembler: $*"
-	@$(AS) $(ASFLAGS) -o build/obj/$*.o $(ASOURCES)
+	@$(AS) $(ASFLAGS) -o build/obj/$*.o 
 
 %.c:
 	@echo "running compiler: $*"

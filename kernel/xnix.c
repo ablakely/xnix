@@ -6,6 +6,7 @@
 
 #include <mem/detect.h>
 #include <tty/console.h>
+#include <stdio.h>
 
 #define halt() for(;;);
 
