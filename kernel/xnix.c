@@ -15,6 +15,8 @@
 #include <cpu/IA32/irqs/irqs.h>
 #include <io/kb/kb.h>
 #include <io/pit/pit.h>
+#include <panic.h>
+
 #define halt() for(;;);
 
 int xnix_main()
@@ -33,6 +35,8 @@ int xnix_main()
 	timer_install();
 	keyboard_install();	// install the keboard
 	print("\n");
+
+	panic("Testing...");
 
 	// loop forever to keep the system alive
 	for (;;)

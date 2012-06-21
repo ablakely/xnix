@@ -79,7 +79,7 @@ void put_c(char c, u8int backColor, u8int foreColor)
 
 	if (c == 0x08 && cursor->x)
 	{
-		if (cursor->x == 0)
+		if (cursor->x == 1)
 		{
 			cursor->y--;
 			put(' ');
@@ -217,7 +217,7 @@ void put(char c)
 
 	if (c == 0x08 && cursor->x)
 	{
-		if (cursor->x == 0)
+		if (cursor->x == 1)
 		{
 			cursor->y--;
 			put(' ');

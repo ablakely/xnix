@@ -27,6 +27,7 @@ all:
 	@gcc -m32 -c kernel/io/kb/layouts/us/qwerty/map.c $(CFLAGS) -o $(OBJDIR)/qwerty.o
 	@gcc -m32 -c kernel/io/pit/pit.c $(CFLAGS) -o $(OBJDIR)/pit.o
 	@gcc -m32 -c kernel/tty/spinner.c $(CFLAGS) -o $(OBJDIR)/spinner.o
+	@gcc -m32 -c kernel/lib/panic.c $(CFLAGS) -o $(OBJDIR)/panic.o
 
 	@echo "Running the assembler..."
 	@nasm $(ASFLAGS) kernel/cpu/IA32/boot/prep/head.s -o $(OBJDIR)/head.o
@@ -38,3 +39,14 @@ all:
 	@ld $(LDFLAGS) -o build/kernel.bin $(OBJECTS)
 
 	@echo "Build succuessful: kernel=build/kernel.bin"
+
+test:
+	all
+	@kvm -kernel build/kernel.bin
+
+github:
+	@rm build/kernel.bin
+	@rm build/objects/*
+	@git add --all
+	git commit
+	git push -u origin master

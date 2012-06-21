@@ -10,8 +10,13 @@
 #include "console.h"
 #include "colors.h"
 
+int spinner_stop = 0;
+
 void advance_spinner()
 {
+	if (spinner_stop == 1)
+		return;
+
 	static int pos = 0;
 	char ch[4]    = {'/', '-', '\\', '|'};
 	printc_to_point(ch[pos], 66, 25 / 2 - 0.5, BLACK, WHITE);
@@ -19,4 +24,7 @@ void advance_spinner()
 	pos = (pos+1) % 4;
 }
 
-
+void disable_spinner()
+{
+	spinner_stop = 1;
+}
