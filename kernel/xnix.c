@@ -36,8 +36,6 @@ int xnix_main()
 	keyboard_install();	// install the keboard
 	print("\n");
 
-	panic("Testing...");
-
 	// loop forever to keep the system alive
 	for (;;)
 	{
