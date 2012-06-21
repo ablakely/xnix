@@ -20,6 +20,8 @@ int state = 0;
 
 void keyboard_handler(struct regs *r)
 {
+	printc("keyboard_handler called.", BLACK, WHITE);
+
 	unsigned char scancode;
 	scancode = inportb(0x60);
 
@@ -47,10 +49,10 @@ void keyboard_handler(struct regs *r)
 		else {
 			if (state == 1)
 			{
-				put(uckbmap[scancode]);
+				put_c(uckbmap[scancode], BLACK, WHITE);
 			}
 			else {
-				put(kbmap[scancode]);
+				put_c(kbmap[scancode], BLACK, WHITE);
 			}
 		}
 	}

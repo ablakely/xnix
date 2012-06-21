@@ -6,6 +6,7 @@
 
 #include "irqs.h"
 #include <iomem.h>
+#include <stdio.h>
 #include <tty/console.h>
 #include <tty/colors.h>
 #include <cpu/IA32/idt/idt.h>
@@ -16,20 +17,14 @@ void *irq_routines[16] = {
 };
 
 
-int irq_install_handler(int irq, void (*handler)(struct regs *r), char *handler_name)
+void irq_install_handler(int irq, void (*handler)(struct regs *r), char *handler_name)
 {
 	printc("Installing ", BLACK, LIGHT_GREEN);
 	printc("IRQ Handler: ", BLACK, GREEN);
 	printc(handler_name, BLACK, LIGHT_CYAN);
-	printc("\n");
-
-	if (irq > 15)
-	{
-		return -1;
-	}
+	printc("\n", BLACK, BLACK);
 
 	irq_routines[irq] = handler;
-	return 0;
 }
 
 void irq_uninstall_handler(int irq)
@@ -57,28 +52,40 @@ void irq_install()
 	printc("IRQs\n", BLACK, LIGHT_RED);
 	irq_remap();
 
-	idt_set_gate(32, (unsigned)_irq0, 0x08, 0x8E);
-	idt_set_gate(33, (unsigned)_irq1, 0x08, 0x8E);
-	idt_set_gate(34, (unsigned)_irq2, 0x08, 0x8E);
-	idt_set_gate(35, (unsigned)_irq3, 0x08, 0x8E);
-	idt_set_gate(36, (unsigned)_irq4, 0x08, 0x8E);
-	idt_set_gate(37, (unsigned)_irq5, 0x08, 0x8E);
-	idt_set_gate(38, (unsigned)_irq6, 0x08, 0x8E);
-	idt_set_gate(39, (unsigned)_irq7, 0x08, 0x8E);
-	idt_set_gate(40, (unsigned)_irq8, 0x08, 0x8E);
-	idt_set_gate(41, (unsigned)_irq9, 0x08, 0x8E);
-	idt_set_gate(42, (unsigned)_irq10, 0x08, 0x8E);
-	idt_set_gate(43, (unsigned)_irq11, 0x08, 0x8E);
-	idt_set_gate(44, (unsigned)_irq12, 0x08, 0x8E);
-	idt_set_gate(45, (unsigned)_irq13, 0x08, 0x8E);
-	idt_set_gate(46, (unsigned)_irq14, 0x08, 0x8E);
-	idt_set_gate(47, (unsigned)_irq15, 0x08, 0x8E);
+	idt_set_gate(32, (unsigned)irq0, 0x08, 0x8E);
+	idt_set_gate(33, (unsigned)irq1, 0x08, 0x8E);
+	idt_set_gate(34, (unsigned)irq2, 0x08, 0x8E);
+	idt_set_gate(35, (unsigned)irq3, 0x08, 0x8E);
+	idt_set_gate(36, (unsigned)irq4, 0x08, 0x8E);
+	idt_set_gate(37, (unsigned)irq5, 0x08, 0x8E);
+	idt_set_gate(38, (unsigned)irq6, 0x08, 0x8E);
+	idt_set_gate(39, (unsigned)irq7, 0x08, 0x8E);
+	idt_set_gate(40, (unsigned)irq8, 0x08, 0x8E);
+	idt_set_gate(41, (unsigned)irq9, 0x08, 0x8E);
+	idt_set_gate(42, (unsigned)irq10, 0x08, 0x8E);
+	idt_set_gate(43, (unsigned)irq11, 0x08, 0x8E);
+	idt_set_gate(44, (unsigned)irq12, 0x08, 0x8E);
+	idt_set_gate(45, (unsigned)irq13, 0x08, 0x8E);
+	idt_set_gate(46, (unsigned)irq14, 0x08, 0x8E);
+	idt_set_gate(47, (unsigned)irq15, 0x08, 0x8E);
 }
 
 void irq_handler(struct regs *r)
 {
 	void (*handler)(struct regs *r);
-	handler = irq_routines[r->int_no - 32];
+	printf("IRQ called (ID: %d) (rNum: %d)\n", r->int_no - 32, r->int_no);
+
+	/*
+	 * It seems as if the norm is to subtract 32 from r->int_no
+	 * but for some reason I am getting the PIT with r->int_no as 10.
+	 * so a quick hack I did was to subtract 10 instead of 32 and it seemed to work.
+	 *
+	 * Will inspect as to why this is happening later, I suspect it has to do
+	 * with my IDT code.
+	 * - Dark_Aaron
+	 */
+
+	handler = irq_routines[r->int_no - 10];
 	if (handler)
 	{
 		handler(r);

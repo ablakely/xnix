@@ -4,7 +4,7 @@
 CC = gcc
 OBJECTS = $(OBJDIR)/*.o
 EXECTUABLE = ./kernel
-CFLAGS = -m32 -fno-leading-underscore -fstrength-reduce -fno-builtin-puts -fno-builtin-printf -fno-builtin-function -finline-functions -nostdinc -fno-stack-protector -fomit-frame-pointer -nostdlib  $(IDIRS)
+CFLAGS = -m32 -fstrength-reduce -fno-builtin-puts -fno-builtin-printf -fno-builtin-function -finline-functions -nostdinc -fno-stack-protector -fomit-frame-pointer -nostdlib  $(IDIRS)
 LDFLAGS = -Tetc/link.ld
 ASFLAGS = -Werror -felf
 IDIRS = -Ikernel/ -Ikernel/lib -Ikernel/io
@@ -25,6 +25,7 @@ all:
 	@gcc -m32 -c kernel/cpu/IA32/irqs/irqs.c $(CFLAGS) -o $(OBJDIR)/irqs.o
 	@gcc -m32 -c kernel/io/kb/kb.c $(CFLAGS) -o $(OBJDIR)/kb.o
 	@gcc -m32 -c kernel/io/kb/layouts/us/qwerty/map.c $(CFLAGS) -o $(OBJDIR)/qwerty.o
+	@gcc -m32 -c kernel/io/pit/pit.c $(CFLAGS) -o $(OBJDIR)/pit.o
 
 	@echo "Running the assembler..."
 	@nasm $(ASFLAGS) kernel/cpu/IA32/boot/prep/head.s -o $(OBJDIR)/head.o

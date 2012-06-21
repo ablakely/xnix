@@ -13,18 +13,22 @@
 #include <cpu/IA32/isrs/isrs.h>
 #include <cpu/IA32/irqs/irqs.h>
 #include <io/kb/kb.h>
+#include <io/pit/pit.h>
 
 #define halt() for(;;);
 
 int xnix_main()
 {
 	init_console();
-	print("xnix: 0.0.1 by Aaron Blakely.  Starting.\n\n");
+	print("xnix 0.0.1 (by Aaron Blakely)\n\n");
 
 	gdt_install();		// install the gdt
 	idt_install();		// install the idt
 	isrs_install();		// install the ISRs
 	irq_install();		// install the IRQs
+	__asm__ volatile("sti"); // safe to allows IRQs now.
+
+	timer_install();
 	keyboard_install();	// install the keboard
 	print("\n");
 

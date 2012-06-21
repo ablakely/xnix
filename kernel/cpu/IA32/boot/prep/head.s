@@ -16,6 +16,10 @@ XBOOT_CHECKSUM		equ -(XBOOT_HEADER_MAGIC + XBOOT_HEADER_FLAGS)
 [EXTERN bss]
 [EXTERN end]
 
+section .text
+
+align 4
+
 xboot:
 	dd XBOOT_HEADER_MAGIC		; GRUB will search for this value
 					; on each 4-byte boundary
@@ -32,11 +36,25 @@ xboot:
 [GLOBAL start]
 [EXTERN xnix_main]
 
+STACKSIZE equ 0x4000			; 16k stack
+
 start:
+	mov	esp, stack + STACKSIZE	; setup the stack
+	push	eax
 	push	ebx
-	cli				; disable interrupts
+	cli
+
 	call xnix_main			; Enter Night.  Exit Light.  Take my hand...
 					; Off to never-never land.  Start the kernel.
+	cli				; disable interrupts
+
+.hang:
+	hlt
 	jmp	$			; loop forever if the kernel exits to keep the CPU
 					; from running whatever is left in the memory
 
+section .bss
+
+align 4
+stack:
+	resb	STACKSIZE		; reserve 16k

@@ -31,7 +31,7 @@ void idt_install()
 	idtp.limit	= (sizeof (struct idt_entry) * 256) - 1;
 	idtp.base	= (int)&idt;
 
-	memset((u8int *)&idt, 0, sizeof(struct idt_entry) * 256);
+	memset(&idt, 0, sizeof(struct idt_entry) * 256);
 
 	idt_load();
 }

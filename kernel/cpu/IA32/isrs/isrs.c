@@ -92,7 +92,7 @@ void fault_handler(struct regs *r)
 	if (r->int_no < 32)
 	{
 		print((char *)exception_messages[r->int_no]);
-		print("System Fault.  Halting!\n");
+		print("\nSystem Fault.  Halting!\n");
 		for (;;);
 	}
 }
