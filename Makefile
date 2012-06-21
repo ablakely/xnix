@@ -40,11 +40,10 @@ all:
 
 	@echo "Build succuessful: kernel=build/kernel.bin"
 
-test:
-	all
+test: all
 	@kvm -kernel build/kernel.bin
 
-github:
+github: all
 	@rm build/kernel.bin
 	@rm build/objects/*
 	@git add --all
