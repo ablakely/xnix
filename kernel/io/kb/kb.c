@@ -20,8 +20,6 @@ int state = 0;
 
 void keyboard_handler(struct regs *r)
 {
-	printc("keyboard_handler called.", BLACK, WHITE);
-
 	unsigned char scancode;
 	scancode = inportb(0x60);
 

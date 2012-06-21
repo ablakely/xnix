@@ -73,19 +73,8 @@ void irq_install()
 void irq_handler(struct regs *r)
 {
 	void (*handler)(struct regs *r);
-	printf("IRQ called (ID: %d) (rNum: %d)\n", r->int_no - 32, r->int_no);
 
-	/*
-	 * It seems as if the norm is to subtract 32 from r->int_no
-	 * but for some reason I am getting the PIT with r->int_no as 10.
-	 * so a quick hack I did was to subtract 10 instead of 32 and it seemed to work.
-	 *
-	 * Will inspect as to why this is happening later, I suspect it has to do
-	 * with my IDT code.
-	 * - Dark_Aaron
-	 */
-
-	handler = irq_routines[r->int_no - 10];
+	handler = irq_routines[r->int_no - 32];
 	if (handler)
 	{
 		handler(r);
