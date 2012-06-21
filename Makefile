@@ -7,7 +7,7 @@ LK = i586-elf-ld
 OBJECTS = $(OBJDIR)/*.o
 EXECTUABLE = ./kernel
 CFLAGS = -m32 -fstrength-reduce -fno-builtin-puts -fno-builtin-printf -fno-builtin-function -finline-functions -nostdinc -fno-stack-protector -fomit-frame-pointer -nostdlib  $(IDIRS)
-LDFLAGS = -Tetc/link.ld
+LDFLAGS = -Tetc/link.ld -melf_i386
 ASFLAGS = -Werror -felf
 IDIRS = -Ikernel/ -Ikernel/lib -Ikernel/io
 OBJDIR = build/objects
@@ -71,4 +71,5 @@ floppy: all
 	@echo "Done: build/floppy.img"
 
 bochs: floppy
-	@cd etc;bochs
+	@cd etc;xterm bochs&
+	@echo "Use kernel 200+`stat -c%b build/kernel.bin`"

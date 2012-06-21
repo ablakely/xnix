@@ -131,7 +131,7 @@ void switch_page_directory(page_directory_t *dir)
 	__asm__ volatile("mov %0, %%cr3" :: "r"(&(dir->tablesPhysical)));
 	u32int cr0;
 	__asm__ volatile("mov %%cr0, %0" : "=r"(cr0));
-	cr0 |= 0x10000000; // enable paging
+	cr0 |= 0x109C00; // enable paging
 	__asm__ volatile("mov %0, %%cr0" :: "r"(cr0));
 }
 
