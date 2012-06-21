@@ -1,6 +1,8 @@
 #ifndef STDIO_H
 #define STDIO_H
 
+#include "stdint.h"
+
 void print(char *c);
 void printc(char *c, u8int bg, u8int fg);
 void puts(char *c);

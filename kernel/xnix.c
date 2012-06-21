@@ -7,6 +7,7 @@
 #include <iomem.h>
 #include <stdio.h>
 #include <tty/console.h>
+#include <tty/spinner.h>
 #include <tty/colors.h>
 #include <cpu/IA32/gdt/gdt.h>
 #include <cpu/IA32/idt/idt.h>
@@ -14,11 +15,12 @@
 #include <cpu/IA32/irqs/irqs.h>
 #include <io/kb/kb.h>
 #include <io/pit/pit.h>
-
 #define halt() for(;;);
 
 int xnix_main()
 {
+	int kernel_ticks = 0;
+
 	init_console();
 	print("xnix 0.0.1 (by Aaron Blakely)\n\n");
 
@@ -33,5 +35,9 @@ int xnix_main()
 	print("\n");
 
 	// loop forever to keep the system alive
-	for (;;);
+	for (;;)
+	{
+		kernel_ticks++;
+
+	}
 }

@@ -26,6 +26,7 @@ all:
 	@gcc -m32 -c kernel/io/kb/kb.c $(CFLAGS) -o $(OBJDIR)/kb.o
 	@gcc -m32 -c kernel/io/kb/layouts/us/qwerty/map.c $(CFLAGS) -o $(OBJDIR)/qwerty.o
 	@gcc -m32 -c kernel/io/pit/pit.c $(CFLAGS) -o $(OBJDIR)/pit.o
+	@gcc -m32 -c kernel/tty/spinner.c $(CFLAGS) -o $(OBJDIR)/spinner.o
 
 	@echo "Running the assembler..."
 	@nasm $(ASFLAGS) kernel/cpu/IA32/boot/prep/head.s -o $(OBJDIR)/head.o

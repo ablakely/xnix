@@ -134,6 +134,14 @@ void print_to_point(char *text, u8int column, u8int line, u8int backColor, u8int
         put(0x08);
 }
 
+void printc_to_point(char c, u8int column, u8int line, u8int backColor, u8int foreColor)
+{
+	set_cursor_point(column-1, line-1);
+	put_c(c, backColor, foreColor);
+	set_cursor_point(cursor->prev_x, cursor->prev_y);
+	put(0x20);
+	put(0x08);
+}
 
 void console_writehex(u32int n)
 {
