@@ -6,16 +6,18 @@
 
 #include <iomem.h>
 #include <stdio.h>
+#include <panic.h>
 #include <tty/console.h>
 #include <tty/spinner.h>
 #include <tty/colors.h>
+#include <cpu/IA32/IA32.h>
 #include <cpu/IA32/gdt/gdt.h>
 #include <cpu/IA32/idt/idt.h>
 #include <cpu/IA32/isrs/isrs.h>
 #include <cpu/IA32/irqs/irqs.h>
 #include <io/kb/kb.h>
 #include <io/pit/pit.h>
-#include <panic.h>
+#include <mem/paging.h>
 
 #define halt() for(;;);
 
@@ -34,7 +36,18 @@ int xnix_main()
 
 	timer_install();
 	keyboard_install();	// install the keboard
+
+	disable_spinner();
+	cpu_wait();
+	init_paging();
+	cpu_wait();
+	enable_spinner();
+
 	print("\n");
+
+
+	u32int *ptr = (u32int *)0xA0000000;
+	u32int dpf = *ptr;
 
 	// loop forever to keep the system alive
 	for (;;)

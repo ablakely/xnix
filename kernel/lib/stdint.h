@@ -12,4 +12,7 @@ typedef unsigned char  u8int;
 typedef          char  s8int;
 typedef          int   bool;
 
+#define true 1
+#define false 0
+
 #endif

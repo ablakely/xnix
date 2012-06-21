@@ -28,6 +28,8 @@ all:
 	@gcc -m32 -c kernel/io/pit/pit.c $(CFLAGS) -o $(OBJDIR)/pit.o
 	@gcc -m32 -c kernel/tty/spinner.c $(CFLAGS) -o $(OBJDIR)/spinner.o
 	@gcc -m32 -c kernel/lib/panic.c $(CFLAGS) -o $(OBJDIR)/panic.o
+	@gcc -m32 -c kernel/mem/malloc.c $(CFLAGS) -o $(OBJDIR)/malloc.o
+	@gcc -m32 -c kernel/mem/paging.c $(CFLAGS) -o $(OBJDIR)/paging.o
 
 	@echo "Running the assembler..."
 	@nasm $(ASFLAGS) kernel/cpu/IA32/boot/prep/head.s -o $(OBJDIR)/head.o
@@ -35,6 +37,8 @@ all:
 	@nasm $(ASFLAGS) kernel/cpu/IA32/idt/idt.s -o $(OBJDIR)/idtasm.o
 	@nasm $(ASFLAGS) kernel/cpu/IA32/isrs/isrs.s -o $(OBJDIR)/isrsasm.o
 	@nasm $(ASFLAGS) kernel/cpu/IA32/irqs/irqs.s -o $(OBJDIR)/irqsasm.o
+	@nasm $(ASFLAGS) kernel/mem/paging.s -o $(OBJDIR)/pagingasm.o
+
 	@echo "Running the linker..."
 	@ld $(LDFLAGS) -o build/kernel.bin $(OBJECTS)
 

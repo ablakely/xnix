@@ -24,6 +24,11 @@ void advance_spinner()
 	pos = (pos+1) % 4;
 }
 
+void enable_spinner()
+{
+	spinner_stop = 0;
+}
+
 void disable_spinner()
 {
 	spinner_stop = 1;

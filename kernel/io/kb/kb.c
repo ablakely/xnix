@@ -47,10 +47,10 @@ void keyboard_handler(struct regs *r)
 		else {
 			if (state == 1)
 			{
-				put_c(uckbmap[scancode], BLACK, WHITE);
+				//put_c(uckbmap[scancode], BLACK, WHITE);
 			}
 			else {
-				put_c(kbmap[scancode], BLACK, WHITE);
+				//put_c(kbmap[scancode], BLACK, WHITE);
 			}
 		}
 	}
