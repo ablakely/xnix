@@ -1,0 +1,15 @@
+The tool (mkusb) is used for copying the floppy image
+to a usb drive.
+
+To build it use:
+	gcc -o mkusb mkusb.c
+
+Usage:
+	./mkusb <device>
+
+Note:
+	Don't use it on a partition.
+	MAKE SURE YOUR DATA IS BACKED UP!
+	Don't use it on your system drive, unless you're in a live distro and
+	are wanting to install xnix (not sure why but...)
+
