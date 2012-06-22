@@ -41,13 +41,11 @@ int xnix_main()
 	cpu_wait();
 	init_paging();
 	cpu_wait();
-	enable_spinner();
 
 	print("\n\n");
 
-//	u32int *ptr = (u32int*)0xA0000000;
-//	u32int dpf  = *ptr;
-//	dpf = LIGHT_RED;
+	u32int *ptr = (u32int *)0xA0000000;
+	u32int dpf = *ptr;
 
 	// loop forever to keep the system alive
 	for (;;)

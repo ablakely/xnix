@@ -1,3 +1,4 @@
+megs: 32
 display_library: sdl
 boot: floppy
 floppya: 1_44="../build/floppy.img", status=inserted

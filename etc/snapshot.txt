@@ -1,0 +1,25 @@
+xnix 0.0.1 (by Aaron Blakely)
+
+Installing GDT
+Installing IDT
+Installing ISRs
+Installing IRQs
+Installing IRQ Handler: PIT
+Installing IRQ Handler: keyboard
+Installing IRQ Handler: Page Fault Interrupt
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

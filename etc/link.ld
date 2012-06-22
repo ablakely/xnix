@@ -1,29 +1,29 @@
 ENTRY(start)
 SECTIONS
 {
-	. = 0x00100000;
-	.text ALIGN (0x1000) :
-	{
-		*(.text)
-	}
 
-	.rodata ALIGN (0x1000) :
-	{
-		*(.rodata*)
-	}
+    .text 0x100000 :
+    {
+        code = .; _code = .; __code = .;
+        *(.text)
+        . = ALIGN(4096);
+    }
 
-	.data ALIGN (0x1000) :
-	{
-		*(.data)
-	}
+    .data :
+    {
+        data = .; _data = .; __data = .;
+        *(.data)
+        *(.rodata)
+        . = ALIGN(4096);
+    }
 
-	.bss :
-	{
-		sbss = .;
-		*(COMMON)
-		*(.bss)
-		ebss = .;
-	}
+    .bss :
+    {
+        bss = .; _bss = .; __bss = .;
+        *(.bss)
+        . = ALIGN(4096);
+    }
 
-	end = .;
+    end = .; _end = .; __end = .;
 }
+
