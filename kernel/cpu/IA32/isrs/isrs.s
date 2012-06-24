@@ -1,5 +1,3 @@
-[BITS 32]
-
 global	_isr0
 global	_isr1
 global	_isr2
@@ -227,6 +225,7 @@ isr_common_stub:
 	push	es
 	push	fs
 	push	gs
+
 	mov	ax, 0x10
 	mov	ds, ax
 	mov	es, ax
@@ -243,4 +242,5 @@ isr_common_stub:
 	pop	ds
 	popa
 	add	esp, 8
+	sti
 	iret

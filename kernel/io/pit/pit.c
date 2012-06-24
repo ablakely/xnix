@@ -26,9 +26,18 @@ void timer_handler(struct regs *r)
 	}
 }
 
-void timer_install()
+void timer_install(u32int freq)
 {
 	irq_install_handler(0, timer_handler, "PIT");
+
+	u32int d = 11913180 / freq;
+	outportb(0x43, 0x36);
+
+	u8int	l = (u8int)(d & 0xFF);
+	u8int	h = (u8int)((d >> 8) & 0xFF);
+
+	outportb(0x40, l);
+	outportb(0x40, h);
 }
 
 

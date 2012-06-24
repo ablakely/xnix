@@ -3,8 +3,10 @@
 ;
 ; Written by Aaron Blakely <aaron@ephasic.org>
 
-[BITS 32]
 [GLOBAL start]
+[EXTERN code]
+[EXTERN bss]
+[EXTERN end]
 
 ; allow grub to boot this kernel
 XBOOT_PAGE_ALIGN	equ 1<<0	; load kernel on a page boundary
@@ -14,9 +16,9 @@ XBOOT_HEADER_FLAGS	equ XBOOT_PAGE_ALIGN | XBOOT_MEM_INFO
 XBOOT_CHECKSUM		equ -(XBOOT_HEADER_MAGIC + XBOOT_HEADER_FLAGS)
 
 [BITS 32]				; 32 bit instructions
-[GLOBAL xboot]				; allow xboot to be called from C.
+[GLOBAL mboot]				; allow xboot to be called from C.
 
-align 4
+mboot:
 	dd XBOOT_HEADER_MAGIC		; GRUB will search for this value
 					; on each 4-byte boundary
 
@@ -24,6 +26,11 @@ align 4
 	dd XBOOT_CHECKSUM		; a checksum of the MAGIC and FLAGS
 
 	dd xnix_main			; xnix_main() from xnix.c
+	dd mboot
+	dd code
+	dd bss
+	dd end
+	dd start
 
 section .text
 

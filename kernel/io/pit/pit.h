@@ -1,13 +1,10 @@
 #ifndef PIT_H
 #define PIT_H
 
-#include <iomem.h>
+#include <stdint.h>
 
 int uptime;
 
-void timer_phase(int hz);
-void timer_handler(struct regs *r);
-void timer_install();
-void timer_wait(int ticks);
+void timer_install(u32int freq);
 
 #endif

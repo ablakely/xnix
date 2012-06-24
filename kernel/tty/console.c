@@ -6,6 +6,7 @@
 
 #include "console.h"
 #include <tty/colors.h>
+#include <tty/spinner.h>
 #include <stdint.h>
 #include <stdlib.h>
 
@@ -77,6 +78,8 @@ void put_c(char c, u8int backColor, u8int foreColor)
 	u16int attribute    = attributeByte << 8;
 	u16int *location;
 
+	disable_spinner();
+
 	if (c == 0x08 && cursor->x)
 	{
 		if (cursor->x == 1)
@@ -123,6 +126,7 @@ void put_c(char c, u8int backColor, u8int foreColor)
 
 	scroll();
 	move_cursor();
+	enable_spinner();
 }
 
 void print_to_point(char *text, u8int column, u8int line, u8int backColor, u8int foreColor)
@@ -215,6 +219,8 @@ void put(char c)
 	u16int attribute    = attributeByte << 8;
 	u16int *location;
 
+	disable_spinner();
+
 	if (c == 0x08 && cursor->x)
 	{
 		if (cursor->x == 1)
@@ -261,6 +267,7 @@ void put(char c)
 
 	scroll();
 	move_cursor();
+	enable_spinner();
 }
 
 void clear_vram()

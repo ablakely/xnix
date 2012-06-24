@@ -19,8 +19,9 @@ void advance_spinner()
 
 	static int pos = 0;
 	char ch[4]    = {'/', '-', '\\', '|'};
-	printc_to_point(ch[pos], 66, 25 / 2 - 0.5, BLACK, WHITE);
-	print_to_point("[Loading]", 63, 25 / 2 -0.5 + 2, BLACK, RED);
+	char *str;
+	print_to_point("Loading... ", 55, 1, BLACK, WHITE);
+	printc_to_point(ch[pos], 66, 1, BLACK, WHITE);
 	pos = (pos+1) % 4;
 }
 

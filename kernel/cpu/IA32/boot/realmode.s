@@ -1,4 +1,3 @@
-[bits 16]
 [GLOBAL Entry16]
 
 idt_real:

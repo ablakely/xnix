@@ -91,8 +91,11 @@ void fault_handler(struct regs *r)
 {
 	if (r->int_no < 32)
 	{
-		print((char *)exception_messages[r->int_no]);
-		print("\nSystem Fault.  Halting!\n");
+		print("\nRecieved Interrupt (");
+		console_writehex(r->int_no);
+		print("): ");
+		printc((char *)exception_messages[r->int_no], BLACK, RED);
+		print("\nSystem is halting!\n");
 		for (;;);
 	}
 }

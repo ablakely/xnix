@@ -2,3 +2,7 @@ megs: 32
 display_library: sdl
 boot: floppy
 floppya: 1_44="../build/floppy.img", status=inserted
+mouse: enabled=0
+
+clock: sync=realtime
+cpu: ips=500000

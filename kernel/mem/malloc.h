@@ -2,7 +2,7 @@
 #define MALLOC_H
 #include <stdint.h>
 
-u32int placement_address;
+//u32int placement_address;
 
 u32int xmalloc_int(u32int sz, int align, u32int *phys);
 u32int xmalloc_a(u32int sz);

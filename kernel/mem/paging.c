@@ -19,6 +19,10 @@ page_directory_t *current_directory = 0;
 u32int *frames;
 u32int nframes;
 
+extern u32int placement_address;
+extern u32int readCR0();
+extern void   writeCR0(u32int cr0);
+
 #define INDEX_FROM_BIT(a)  (a/(8*4))
 #define OFFSET_FROM_BIT(a) (a/(8*4))
 
@@ -123,12 +127,11 @@ void init_paging()
 void switch_page_directory(page_directory_t *dir)
 {
 	current_directory = dir;
-	asm volatile("mov %0, %%cr3" :: "r"(&dir->tablesPhysical));
-
 	u32int cr0;
-	asm volatile("mov %%cr0, %0" : "=r"(cr0));
 
-	cr0 |= 0x8000000;
+	asm volatile("mov %0, %%cr3" :: "r"(&dir->tablesPhysical));
+	asm volatile("mov %%cr0, %0" : "=r"(cr0));
+	cr0 |- 0x80000000;
 	asm volatile("mov %0, %%cr0" :: "r"(cr0));
 }
 
