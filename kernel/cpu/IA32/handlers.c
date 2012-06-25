@@ -68,9 +68,9 @@ void irq_handler(struct regs *r)
 	}
 
 	outportb(0x20, 0x20);
-	if (interrupt_handlers[r->int_no - 32] != 0)
+	if (interrupt_handlers[r->int_no] != 0)
 	{
-		handler = interrupt_handlers[r->int_no - 32];
+		handler = interrupt_handlers[r->int_no];
 		handler(r);
 	}
 }
