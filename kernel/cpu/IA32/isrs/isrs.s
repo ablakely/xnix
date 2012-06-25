@@ -221,25 +221,24 @@ extern isr_handler
 
 isr_common_stub:
 	pusha
-	push	ds
-	push	es
-	push	fs
-	push	gs
+
+	mov	ax, ds
+	push	eax
 
 	mov	ax, 0x10
 	mov	ds, ax
 	mov	es, ax
 	mov	fs, ax
 	mov	gs, ax
-	mov	eax, esp
-	push	eax
-	mov	eax, isr_handler
-	call	eax			; calling this way preserves the EIP register
-	pop	eax
-	pop	gs
-	pop	fs
-	pop	es
-	pop	ds
+
+	call	isr_handler
+
+	pop	ebx
+	mov	ds, bx
+	mov	es, bx
+	mov	fs, bx
+	mov	gs, bx
+
 	popa
 	add	esp, 8
 	sti

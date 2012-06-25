@@ -1,28 +1,9 @@
-[global read_cr0]
-[global write_cr0]
-[global read_cr3]
-[global write_cr3]
+[global enable_paging]
 
-read_cr0:
-	mov	eax, cr0
-	retn
-
-write_cr0:
-	push	ebp
-	mov	ebp, esp
-	mov	eax, [epb+8]
-	mov	cr0, eax
-	pop	ebp
-	retn
-
-read_cr3:
-	mov	eax, cr3
-	retn
-
-write_cr3:
-	push	ebp
-	mov	ebp, esp
-	mov	eax, [epb+8]
+enable_paging:
+	mov	eax, [ebp+8]
 	mov	cr3, eax
-	pop	ebp
-	retn
+	mov	eax, cr0
+
+	or	eax, 0x80000000
+	mov	cr0, eax

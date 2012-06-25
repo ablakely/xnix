@@ -6,13 +6,14 @@
 
 #include "malloc.h"
 #include <stdint.h>
+#include <stdio.h>
 
 extern u32int end;
-u32int placement_address = (u32int)&end;
-
+u32int placement_address = (u32int)0x9C000;
 
 u32int xmalloc_int(u32int sz, int align, u32int *phys)
 {
+//	printf("debug: pa=0x%d\n", placement_address);
 	if (align == 1 && (placement_address & 0xFFFFF000))
 	{
 		placement_address &= 0xFFFFF000;

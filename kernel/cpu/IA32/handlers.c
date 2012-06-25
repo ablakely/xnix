@@ -18,11 +18,7 @@ void (*interrupt_handlers[256])(struct regs *);
 
 void init_handlers()
 {
-	int i = 256;
-	while (i--)
-	{
-		interrupt_handlers[i] = 0;
-	}
+	memset(&interrupt_handlers, 0, sizeof(void*(struct regs *r))*256);
 }
 
 void interrupt_install_handler(u8int n, void (*handler)(struct regs *), char *msg)

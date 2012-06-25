@@ -13,15 +13,14 @@
 #include <tty/console.h>
 #include <cpu/IA32/handlers.h>
 
-page_directory_t *kernel_directory = 0;
+page_directory_t *kernel_directory = (page_directory_t*)0x9C000;
 page_directory_t *current_directory = 0;
 
 u32int *frames;
 u32int nframes;
 
 extern u32int placement_address;
-extern u32int readCR0();
-extern void   writeCR0(u32int cr0);
+extern void enable_paging(u32int);
 
 #define INDEX_FROM_BIT(a)  (a/(8*4))
 #define OFFSET_FROM_BIT(a) (a/(8*4))
@@ -120,19 +119,15 @@ void init_paging()
 		i += 0x1000;
 	}
 
-	interrupt_install_handler(13, page_fault, "page fault handler");
+	interrupt_install_handler(14, page_fault, "page fault handler");
 	switch_page_directory(kernel_directory);
 }
 
 void switch_page_directory(page_directory_t *dir)
 {
 	current_directory = dir;
-	u32int cr0;
 
-	asm volatile("mov %0, %%cr3" :: "b"(&dir->tablesPhysical));
-	asm volatile("mov %%cr0, %0" : "=b"(cr0));
-	cr0 |= 0x80000000;
-	asm volatile("mov %0, %%cr0" :: "b"(cr0));
+	enable_paging((u32int)&dir->tablesPhysical);
 }
 
 page_t *get_page(u32int address, int make, page_directory_t *dir)

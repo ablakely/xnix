@@ -37,11 +37,7 @@ section .text
 [GLOBAL start]
 [EXTERN xnix_main]
 
-STACKSIZE equ 0x4000			; 16k stack
-
 start:
-	mov	esp, stack + STACKSIZE	; setup the stack
-	push	eax
 	push	ebx
 	cli
 
@@ -54,8 +50,3 @@ start:
 	jmp	$			; loop forever if the kernel exits to keep the CPU
 					; from running whatever is left in the memory
 
-section .bss
-
-align 4
-stack:
-	resb	STACKSIZE		; reserve 16k
