@@ -29,6 +29,8 @@ typedef struct page_directory
 page_directory_t *kernel_directory;
 page_directory_t *current_directory;
 
+extern u32int read_cr0();
+
 void init_paging();
 void switch_page_directory(page_directory_t *new);
 page_t *get_page(u32int address, int make, page_directory_t *dir);

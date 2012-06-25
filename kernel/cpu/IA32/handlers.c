@@ -37,8 +37,6 @@ void interrupt_remove_handler(u8int n)
 void isr_handler(struct regs *r)
 {
 	void (*handler)(struct regs *r);
-	printf("isr%d called.", r->int_no);
-	for(;;);
 
 	if (r->int_no < 32)
 	{

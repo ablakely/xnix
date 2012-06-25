@@ -13,10 +13,10 @@
 
 struct regs
 {
-	u32int	ds;
-	u32int	edi, esi, ebp, esp, ebx, edx, ecx, eax;
-	u32int	int_no, err_code;
-	u32int	eip, cs, eflags, useresp, ss;
+	unsigned int gs, fs, es, ds;
+	unsigned int edi, esi, ebp, esp, ebx, edx, ecx, eax;
+	unsigned int int_no, err_code;
+	unsigned int eip, cs, eflags, useresp, ss;
 };
 
 void outportb(u16int port, u8int val);

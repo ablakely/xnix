@@ -13,7 +13,7 @@
 #include <tty/console.h>
 #include <cpu/IA32/handlers.h>
 
-page_directory_t *kernel_directory = (page_directory_t*)0x9C000;
+page_directory_t *kernel_directory = 0;
 page_directory_t *current_directory = 0;
 
 u32int *frames;
@@ -80,7 +80,7 @@ void alloc_frame(page_t *page, int is_kernel, int is_writeable)
 		{
 			panic("No free frames left -- Out of memory.");
 		}
-		set_frame(idx*01000);
+		set_frame(idx*0x1000);
 		page->present = 1;
 		page->rw      = (is_writeable)?1:0;
 		page->user    = (is_kernel)?0:1;
@@ -108,7 +108,7 @@ void init_paging()
 	frames				= (u32int *)xmalloc(INDEX_FROM_BIT(nframes));
 	memset(frames, 0, INDEX_FROM_BIT(nframes));
 
-	kernel_directory = (page_directory_t *)xmalloc_a(sizeof(page_directory_t));
+	kernel_directory = (page_directory_t*)xmalloc_a(sizeof(page_directory_t));
 	memset(kernel_directory, 0, sizeof(page_directory_t));
 	current_directory = kernel_directory;
 
@@ -141,7 +141,7 @@ page_t *get_page(u32int address, int make, page_directory_t *dir)
 	}
 	else if (make) {
 		u32int tmp;
-		dir->tables[table_idx]	= (page_table_t *)xmalloc_ap(sizeof(page_table_t), &tmp);
+		dir->tables[table_idx]	= (page_table_t*)xmalloc_ap(sizeof(page_table_t), &tmp);
 		memset(dir->tables[table_idx], 0, 0x1000);
 		dir->tablesPhysical[table_idx] = tmp | 0x7;
 
@@ -154,8 +154,7 @@ page_t *get_page(u32int address, int make, page_directory_t *dir)
 
 void page_fault(struct regs *r)
 {
-	u32int faulting_address;
-	asm volatile("mov %%cr2, %0" : "=r"(faulting_address));
+	u32int faulting_address = read_cr0();
 
 	int present	= !(r->err_code & 0x1);
 	int rw		= r->err_code & 0x2;

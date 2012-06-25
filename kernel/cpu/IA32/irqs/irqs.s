@@ -116,8 +116,10 @@ extern irq_handler
 irq_common_stub:
 	pusha
 
-	mov	ax, ds
-	push	eax
+	push	ds
+	push	es
+	push	fs
+	push	gs
 
 	mov	ax, 0x10
 	mov	ds, ax
@@ -125,15 +127,17 @@ irq_common_stub:
 	mov	fs, ax
 	mov	gs, ax
 
-	call	irq_handler
+	mov	eax, esp
+	push	eax
+	mov	eax, irq_handler
+	call	eax
 
-	pop	ebx
-	mov	ds, bx
-	mov	es, bx
-	mov	fs, bx
-	mov	gs, bx
+	pop	eax
+	pop	gs
+	pop	fs
+	pop	es
+	pop	ds
 
 	popa
 	add	esp, 8
-	sti
 	iret
