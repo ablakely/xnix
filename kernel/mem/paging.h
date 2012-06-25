@@ -34,7 +34,4 @@ void switch_page_directory(page_directory_t *new);
 page_t *get_page(u32int address, int make, page_directory_t *dir);
 void page_fault(struct regs *r);
 
-extern u32int readCR0();
-extern void   writeCR0(u32int cr0);
-
 #endif

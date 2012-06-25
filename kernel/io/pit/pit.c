@@ -6,10 +6,11 @@
 
 #include "pit.h"
 #include <iomem.h>
+#include <stdio.h>
 #include <tty/console.h>
 #include <tty/spinner.h>
 #include <tty/colors.h>
-#include <cpu/IA32/irqs/irqs.h>
+#include <cpu/IA32/handlers.h>
 
 int timer_ticks = 0;
 int uptime = 0;
@@ -28,7 +29,7 @@ void timer_handler(struct regs *r)
 
 void timer_install(u32int freq)
 {
-	irq_install_handler(0, timer_handler, "PIT");
+	interrupt_install_handler(0, timer_handler, "PIT");
 
 	u32int d = 11913180 / freq;
 	outportb(0x43, 0x36);

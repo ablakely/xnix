@@ -9,9 +9,11 @@
 #include <stdio.h>
 #include <tty/console.h>
 #include <tty/colors.h>
+#include <cpu/IA32/isrs/isrs.h>
 
 struct idt_entry idt[256];
 struct idt_ptr   idtp;
+
 
 void idt_set_gate(unsigned char num, unsigned long base, unsigned short sel, unsigned char flags)
 {
@@ -32,6 +34,6 @@ void idt_install()
 	idtp.base	= (int)&idt;
 
 	memset(&idt, 0, sizeof(struct idt_entry) * 256);
-
-	idt_load();
+	isrs_install();
+	idt_flush();
 }

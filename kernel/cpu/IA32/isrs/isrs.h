@@ -36,7 +36,8 @@ extern void _isr29();
 extern void _isr30();
 extern void _isr31();
 
+char *exception_messages[32];
+
 void isrs_install();
-void fault_handler(struct regs *r);
 
 #endif

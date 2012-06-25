@@ -12,7 +12,7 @@
 #include <tty/colors.h>
 
 extern void gdt_flush(u32int);
-struct gdt_entry gdt[3];
+struct gdt_entry gdt[5];
 struct gdt_ptr   gp;
 
 void gdt_set_gate(int num, u32int base, u32int limit, u8int access, u8int gran)
@@ -33,12 +33,14 @@ void gdt_install()
 	printc("Installing ", BLACK, LIGHT_GREEN);
 	printc("GDT\n", BLACK, LIGHT_RED);
 
-	gp.limit = (sizeof(struct gdt_entry) * 3) - 1;
+	gp.limit = (sizeof(struct gdt_entry) * 5) - 1;
 	gp.base  = (u32int)&gdt;
 
 	gdt_set_gate(0, 0, 0, 0, 0);
 	gdt_set_gate(1, 0, 0xFFFFFFFF, 0x9A, 0xCF);
 	gdt_set_gate(2, 0, 0xFFFFFFFF, 0x92, 0xCF);
+	gdt_set_gate(3, 0, 0xFFFFFFFF, 0xFA, 0xCF);
+	gdt_set_gate(4, 0, 0xFFFFFFFF, 0xF2, 0xCF);
 
 	gdt_flush((u32int)&gp);
 }

@@ -1,7 +1,7 @@
-global idt_load
+global idt_flush
 extern idtp
 
-idt_load:
+idt_flush:
 	lidt [idtp]
 	ret
 

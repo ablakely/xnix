@@ -11,26 +11,6 @@
 #include <tty/colors.h>
 #include <cpu/IA32/idt/idt.h>
 
-void (*irq_routines[16])(struct regs*) = {
-        0, 0, 0, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 0, 0
-};
-
-
-void irq_install_handler(int irq, void (*handler)(struct regs *), char *handler_name)
-{
-	printc("Installing ", BLACK, LIGHT_GREEN);
-	printc("IRQ Handler: ", BLACK, GREEN);
-	printc(handler_name, BLACK, LIGHT_CYAN);
-	printc("\n", BLACK, BLACK);
-
-	irq_routines[irq] = handler;
-}
-
-void irq_uninstall_handler(int irq)
-{
-	irq_routines[irq] = 0;
-}
 
 void irq_remap(void)
 {
@@ -70,20 +50,3 @@ void irq_install()
 	idt_set_gate(47, (unsigned)irq15, 0x08, 0x8E);
 }
 
-void irq_handler(struct regs *r)
-{
-	void (*handler)(struct regs *r);
-
-	handler = irq_routines[r->int_no - 32];
-	if (handler)
-	{
-		handler(r);
-	}
-
-	if (r->int_no >= 40)
-	{
-		outportb(0xA0, 0x20);
-	}
-
-	outportb(0x20, 0x20);
-}

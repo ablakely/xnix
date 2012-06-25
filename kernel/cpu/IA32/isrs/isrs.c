@@ -8,45 +8,9 @@
 #include <iomem.h>
 #include <tty/console.h>
 #include <tty/colors.h>
+#include <cpu/IA32/handlers.h>
 #include <cpu/IA32/gdt/gdt.h>
 #include <cpu/IA32/idt/idt.h>
-
-char *exception_messages[] =
-{
-        "Division by Zero",
-        "Debug",
-        "Non-Maskable Interrupt",
-        "Breakpoint",
-        "Into Detected Overflow",
-        "Out of Bounds",
-        "Invalid Opcode",
-        "No Coprocessor",
-        "Double Fault",
-        "Coprocessor Segment Overrun",
-        "Bad TSS",
-        "Segment Not Present",
-        "Stack Fault",
-        "General Protection Fault",
-        "Page Fault",
-        "Unkown Interrupt",
-        "Coprocessor Fault",
-        "Alignment Check",
-        "Machine Check",
-        "Reserved",
-        "Reserved",
-        "Reserved",
-        "Reserved",
-        "Reserved",
-        "Reserved",
-        "Reserved",
-        "Reserved",
-        "Reserved",
-        "Reserved",
-        "Reserved",
-        "Reserved",
-        "Reserved"
-};
-
 
 void isrs_install()
 {
@@ -87,15 +51,4 @@ void isrs_install()
 	idt_set_gate(31, (unsigned)_isr31, 0x08, 0x8E);
 }
 
-void fault_handler(struct regs *r)
-{
-	if (r->int_no < 32)
-	{
-		print("\nRecieved Interrupt (");
-		console_writehex(r->int_no);
-		print("): ");
-		printc((char *)exception_messages[r->int_no], BLACK, RED);
-		print("\nSystem is halting!\n");
-		for (;;);
-	}
-}
+

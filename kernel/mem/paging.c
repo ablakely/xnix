@@ -11,7 +11,7 @@
 #include <stdio.h>
 #include <panic.h>
 #include <tty/console.h>
-#include <cpu/IA32/irqs/irqs.h>
+#include <cpu/IA32/handlers.h>
 
 page_directory_t *kernel_directory = 0;
 page_directory_t *current_directory = 0;
@@ -120,7 +120,7 @@ void init_paging()
 		i += 0x1000;
 	}
 
-	irq_install_handler(14, page_fault, "Page Fault Interrupt");
+	interrupt_install_handler(13, page_fault, "page fault handler");
 	switch_page_directory(kernel_directory);
 }
 
@@ -129,10 +129,10 @@ void switch_page_directory(page_directory_t *dir)
 	current_directory = dir;
 	u32int cr0;
 
-	asm volatile("mov %0, %%cr3" :: "r"(&dir->tablesPhysical));
-	asm volatile("mov %%cr0, %0" : "=r"(cr0));
-	cr0 |- 0x80000000;
-	asm volatile("mov %0, %%cr0" :: "r"(cr0));
+	asm volatile("mov %0, %%cr3" :: "b"(&dir->tablesPhysical));
+	asm volatile("mov %%cr0, %0" : "=b"(cr0));
+	cr0 |= 0x80000000;
+	asm volatile("mov %0, %%cr0" :: "b"(cr0));
 }
 
 page_t *get_page(u32int address, int make, page_directory_t *dir)

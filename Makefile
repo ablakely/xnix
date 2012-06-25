@@ -25,6 +25,8 @@ all:
 	@$(CC) -m32 -c kernel/cpu/IA32/idt/idt.c $(CFLAGS) -o $(OBJDIR)/idt.o
 	@$(CC) -m32 -c kernel/cpu/IA32/isrs/isrs.c $(CFLAGS) -o $(OBJDIR)/isrs.o
 	@$(CC) -m32 -c kernel/cpu/IA32/irqs/irqs.c $(CFLAGS) -o $(OBJDIR)/irqs.o
+	@$(CC) -m32 -c kernel/cpu/IA32/descriptors.c $(CFLAGS) -o $(OBJDIR)/descriptors.o
+	@$(CC) -m32 -c kernel/cpu/IA32/handlers.c $(CFLAGS) -o $(OBJDIR)/handlers.o
 	@$(CC) -m32 -c kernel/io/kb/kb.c $(CFLAGS) -o $(OBJDIR)/kb.o
 	@$(CC) -m32 -c kernel/io/kb/layouts/us/qwerty/map.c $(CFLAGS) -o $(OBJDIR)/qwerty.o
 	@$(CC) -m32 -c kernel/io/pit/pit.c $(CFLAGS) -o $(OBJDIR)/pit.o

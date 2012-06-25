@@ -217,7 +217,7 @@ _isr31:
 	push	byte 31
 	jmp	isr_common_stub
 
-extern fault_handler
+extern isr_handler
 
 isr_common_stub:
 	pusha
@@ -233,7 +233,7 @@ isr_common_stub:
 	mov	gs, ax
 	mov	eax, esp
 	push	eax
-	mov	eax, fault_handler
+	mov	eax, isr_handler
 	call	eax			; calling this way preserves the EIP register
 	pop	eax
 	pop	gs

@@ -8,7 +8,7 @@
 #include "map.h"
 #include "kbbuffer.h"
 #include <iomem.h>
-#include <cpu/IA32/irqs/irqs.h>
+#include <cpu/IA32/handlers.h>
 #include <tty/console.h>
 #include <tty/colors.h>
 
@@ -58,5 +58,5 @@ void keyboard_handler(struct regs *r)
 
 void keyboard_install()
 {
-	irq_install_handler(1, keyboard_handler, "keyboard");
+	interrupt_install_handler(1, keyboard_handler, "keyboard");
 }
