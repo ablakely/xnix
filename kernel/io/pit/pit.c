@@ -29,7 +29,7 @@ void timer_handler(struct regs *r)
 
 void timer_install(u32int freq)
 {
-	interrupt_install_handler(0, timer_handler, "PIT");
+	interrupt_install_handler(IRQ0, timer_handler, "PIT");
 
 	u32int d = 11913180 / freq;
 	outportb(0x43, 0x36);
