@@ -2,7 +2,7 @@
 [global read_cr0]
 
 enable_paging:
-	mov	eax, [ebp+8]
+	mov	eax, [esp]
 	mov	cr3, eax
 	mov	eax, cr0
 
