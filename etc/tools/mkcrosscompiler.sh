@@ -34,7 +34,7 @@ tar xvjf `basename $GCCURL .tar.bz2`
 
 ########################################################
 # Start the binutils install
-#################
+########################################################
 
 cd /usr/src/build-binutils
 . "../`basename $BINUTILSURL .tar.gz`/configure --target=${TARGET} --prefix=${PREFIX} --disable-nls"
@@ -44,9 +44,10 @@ echo "Done installing binutils."
 
 #######################################################
 # Start the gcc install
-######################################################
+#######################################################
 
 cd /usr/src/build-gcc/
+export PATH=$PATH:$PREFIX/bin
 . "../`basename $GCCURL .tar.bz2`/configure --target=${TARGET} --prefix=${PREFIX} --disable-nls --enable-languages=c,c++ --without-headers"
 make all-gcc
 make install-gcc
