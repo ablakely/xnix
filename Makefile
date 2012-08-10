@@ -63,7 +63,7 @@ clean:
 	@rm build/kernel.bin
 	@rm build/floppy.img
 	@rm build/objects/*
-
+	@rm etc/blog.txt etc/snapshot.txt
 
 floppy: all
 	@mkdir tmp
