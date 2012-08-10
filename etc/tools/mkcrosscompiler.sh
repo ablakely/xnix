@@ -54,7 +54,7 @@ echo "Done installing gcc."
 
 ######################################################
 
-echo "Your enviornment should now have a working i586-elf cross compiler tool chain!"
+echo "Your environment should now have a working i586-elf cross compiler tool chain!"
 echo 'But first, you need to do this:'
 echo '	export $PATH=$PATH:/usr/local/cross/bin'
 echo " "
