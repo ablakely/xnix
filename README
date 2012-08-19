@@ -2,3 +2,7 @@ xnix: a small kernel for play
 Written by Aaron Blakely <aaron@ephasic.org>
 
 IRC: irc.alphachat.net #ephasic
+
+--------------------------------------------
+Need an i586 cross compiler?
+Run mkcrosscompiler.sh in etc/tools :)
