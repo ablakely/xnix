@@ -23,21 +23,21 @@ mkdir build-binutils build-gcc
 
 echo "Downloading gcc 4.2.1... :)"
 wget $GCCURL
-echo "Done!  Now contacting teh mothership..."
+echo "Done!  Now contacting the mothership..."
 sleep 3s
-echo "Teh mothership requires binutils.  Downloading..."
+echo "The mothership requires binutils.  Downloading..."
 wget $BINUTILSURL
 
 echo "Extracting the DNA from the seeds."
-tar xvjf `basename $BINUTILSURL .tar.gz`
-tar xvjf `basename $GCCURL .tar.bz2`
+tar xvf `basename $BINUTILSURL`
+tar xvjf `basename $GCCURL`
 
 ########################################################
 # Start the binutils install
 ########################################################
 
 cd /usr/src/build-binutils
-. "../`basename $BINUTILSURL .tar.gz`/configure --target=${TARGET} --prefix=${PREFIX} --disable-nls"
+/usr/src/`basename $BINUTILSURL .tar.gz`/configure --target=${TARGET} --prefix=${PREFIX} --disable-nls
 make all
 make install
 echo "Done installing binutils."
@@ -48,7 +48,7 @@ echo "Done installing binutils."
 
 cd /usr/src/build-gcc/
 export PATH=$PATH:$PREFIX/bin
-. "../`basename $GCCURL .tar.bz2`/configure --target=${TARGET} --prefix=${PREFIX} --disable-nls --enable-languages=c,c++ --without-headers"
+/usr/src/`basename $GCCURL .tar.bz2`/configure --target=${TARGET} --prefix=${PREFIX} --disable-nls --enable-languages=c,c++ --without-headers
 make all-gcc
 make install-gcc
 echo "Done installing gcc."
@@ -57,7 +57,7 @@ echo "Done installing gcc."
 
 echo "Your environment should now have a working i586-elf cross compiler tool chain!"
 echo 'But first, you need to do this:'
-echo '	export $PATH=$PATH:/usr/local/cross/bin'
+echo '	export PATH=PATH:/usr/local/cross/bin'
 echo " "
 echo "Also make sure you have a working nasm assembler."
 
