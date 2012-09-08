@@ -20,10 +20,9 @@ u32int *frames;
 u32int nframes;
 
 extern u32int placement_address;
-extern void enable_paging(u32int);
 
 #define INDEX_FROM_BIT(a)  (a/(8*4))
-#define OFFSET_FROM_BIT(a) (a/(8*4))
+#define OFFSET_FROM_BIT(a) (a%(8*4))
 
 static void set_frame(u32int frame_addr)
 {
@@ -126,8 +125,12 @@ void init_paging()
 void switch_page_directory(page_directory_t *dir)
 {
 	current_directory = dir;
+	asm volatile("mov %0, %%cr3":: "r"(&dir->tablesPhysical));
+	u32int cr0;
 
-	enable_paging((u32int)&dir->tablesPhysical);
+	asm volatile("mov %%cr0, %0": "=r"(cr0));
+	cr0 |= 0x80000000;
+	asm volatile("mov %0, %%cr0":: "r"(cr0));
 }
 
 page_t *get_page(u32int address, int make, page_directory_t *dir)
@@ -142,7 +145,6 @@ page_t *get_page(u32int address, int make, page_directory_t *dir)
 	else if (make) {
 		u32int tmp;
 		dir->tables[table_idx]	= (page_table_t*)xmalloc_ap(sizeof(page_table_t), &tmp);
-		memset(dir->tables[table_idx], 0, 0x1000);
 		dir->tablesPhysical[table_idx] = tmp | 0x7;
 
 		return &dir->tables[table_idx]->pages[address%1024];
@@ -154,7 +156,8 @@ page_t *get_page(u32int address, int make, page_directory_t *dir)
 
 void page_fault(struct regs *r)
 {
-	u32int faulting_address = read_cr0();
+	u32int faulting_address;
+	asm volatile("mov %%cr2, %0" : "=r" (faulting_address));
 
 	int present	= !(r->err_code & 0x1);
 	int rw		= r->err_code & 0x2;
