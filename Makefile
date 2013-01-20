@@ -32,7 +32,6 @@ all:
 	@$(CC) -m32 -c kernel/io/pit/pit.c $(CFLAGS) -o $(OBJDIR)/pit.o
 	@$(CC) -m32 -c kernel/tty/spinner.c $(CFLAGS) -o $(OBJDIR)/spinner.o
 	@$(CC) -m32 -c kernel/lib/panic.c $(CFLAGS) -o $(OBJDIR)/panic.o
-	@$(CC) -m32 -c kernel/mem/malloc.c $(CFLAGS) -o $(OBJDIR)/malloc.o
 	@$(CC) -m32 -c kernel/mem/paging.c $(CFLAGS) -o $(OBJDIR)/paging.o
 
 	@echo "Running the assembler..."
@@ -59,10 +58,10 @@ github: all
 	git push -u origin master
 
 clean:
-	@rm build/kernel.bin
-	@rm build/floppy.img
-	@rm build/objects/*
-	@rm etc/blog.txt etc/snapshot.txt
+	@rm -rf build/kernel.bin
+	@rm -rf build/floppy.img
+	@rm -rf build/objects/*
+	@rm -rf etc/blog.txt etc/snapshot.txt
 
 floppy: all
 	@mkdir tmp
@@ -74,3 +73,4 @@ floppy: all
 bochs: floppy
 	@cd etc;xterm bochs&
 	@echo "Use kernel 200+`stat -c%b build/kernel.bin`"
+

@@ -1,39 +1,12 @@
 #ifndef PAGING_H
 #define PAGING_H
+
 #include <stdint.h>
-#include <iomem.h>
 
-typedef struct page
-{
-	u32int present		: 1;
-	u32int rw		: 1;
-	u32int user		: 1;
-	u32int accessed		: 1;
-	u32int dirty		: 1;
-	u32int unused		: 7;
-	u32int frame		: 20;
-} page_t;
+u32int page_aligned_end;
+u32int *page_directory;
 
-typedef struct page_table
-{
-	page_t pages[1024];
-} page_table_t;
-
-typedef struct page_directory
-{
-	page_table_t  *tables[1024];
-	u32int tablesPhysical[1024];
-	u32int physicalAddress;
-} page_directory_t;
-
-page_directory_t *kernel_directory;
-page_directory_t *current_directory;
-
-extern u32int read_cr0();
-
+u32int *create_page_table(int page_entry);
 void init_paging();
-void switch_page_directory(page_directory_t *new);
-page_t *get_page(u32int address, int make, page_directory_t *dir);
-void page_fault(struct regs *r);
 
 #endif
