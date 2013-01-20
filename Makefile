@@ -32,6 +32,7 @@ all:
 	@$(CC) -m32 -c kernel/io/pit/pit.c $(CFLAGS) -o $(OBJDIR)/pit.o
 	@$(CC) -m32 -c kernel/tty/spinner.c $(CFLAGS) -o $(OBJDIR)/spinner.o
 	@$(CC) -m32 -c kernel/lib/panic.c $(CFLAGS) -o $(OBJDIR)/panic.o
+	@$(CC) -m32 -c kernel/mem/malloc.c $(CFLAGS) -o $(OBJDIR)/malloc.o
 	@$(CC) -m32 -c kernel/mem/paging.c $(CFLAGS) -o $(OBJDIR)/paging.o
 
 	@echo "Running the assembler..."
