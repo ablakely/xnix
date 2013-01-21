@@ -3,18 +3,18 @@ Written by Aaron Blakely <aaron@ephasic.org>
 
 IRC: irc.alphachat.net #ephasic
 
---------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------------------------------
 Need an i586 cross compiler?
 Run mkcrosscompiler.sh in etc/tools :)
 
---------------------------------------------
-
+-----------------------------------------------------------------------------------------------------------------------------------------------
 Building:
-	KVM/QUEMU support is dodgy.  I recommend using bochs, or actual hardware.
 
-	You'll need to make an initrd, to do so compile etc/mkinitrd/mkinitrd.c and run it, then coppy the initrd.img file to kernel/
+KVM/QUEMU support is dodgy.  I recommend using bochs, or actual hardware.
 
-	To make a floppy image just use: make floppy
-	To make run in bochs: make bochs
+You'll need to make an initrd, to do so compile etc/mkinitrd/mkinitrd.c and run it, then coppy the initrd.img file to kernel/
+
+To make a floppy image just use: make floppy
+To make run in bochs: make bochs
 
 	
