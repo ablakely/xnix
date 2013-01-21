@@ -61,17 +61,13 @@ s8int header_t_less_than(void *a, void *b)
 
 heap_t *create_heap(u32int start, u32int end_addr, u32int max, u8int supervisor, u8int readonly)
 {
-	print("Debug: Allocating heap memory with xmalloc()...\n");
 	heap_t *heap		= (heap_t*)xmalloc(sizeof(heap_t));
 
 	ASSERT(start%0x1000 == 0);
 	ASSERT(end_addr%0x1000 == 0);
 
-	print("Debug: Creating heap index...\n");
 	ordered_array_t temp	= place_ordered_array((void*)start, XNIX_HEAP_INDEX_SIZE, &header_t_less_than);
-
 	heap->index		= temp;
-	print("Debug: placed index in heap...\n");
 
 	start		       += sizeof(type_t)*XNIX_HEAP_INDEX_SIZE;
 
@@ -91,7 +87,7 @@ heap_t *create_heap(u32int start, u32int end_addr, u32int max, u8int supervisor,
 	hole->size		= end_addr - start;
 	hole->magic		= XNIX_HEAP_MAGIC;
 	hole->is_hole		= 1;
-	print("Debug: Inserting ordered array into heap index...\n");
+
 	insert_ordered_array((void*)hole, &heap->index);
 
 	return heap;

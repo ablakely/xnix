@@ -121,7 +121,7 @@ void init_paging()
 	}
 
 	i = 0;
-	while (i < placement_address)
+	while (i < placement_address+0x1000)
 	{
 		alloc_frame(get_page(i, 1, kernel_directory), 0, 0);
 		i += 0x1000;
@@ -136,7 +136,7 @@ void init_paging()
 	switch_page_directory(kernel_directory);
 
 	// Initialise the kernel heap
-	printc("Initilizing kernel heap...\n", BLACK, WHITE);
+	printc("Creating kernel heap...\n", BLACK, WHITE);
 	xnix_heap = create_heap(XNIX_HEAP_START, XNIX_HEAP_START + XNIX_HEAP_INITIAL_SIZE, 0xCFFFF000, 0, 0);
 }
 

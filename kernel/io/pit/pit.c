@@ -19,7 +19,6 @@ int spinneri;
 void timer_handler(struct regs *r)
 {
 	timer_ticks++;
-	advance_spinner();
 
 	if (timer_ticks % 18 == 0)
 	{

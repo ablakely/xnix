@@ -32,9 +32,8 @@ ordered_array_t place_ordered_array(void *addr, u32int max_size, lessthan_predic
 {
 	ordered_array_t ret;
 	ret.array		= (type_t*)addr;
-	printf("debug: about to call memset with (%x, 0, %d)\n", ret.array, max_size*sizeof(type_t));
 	memset(ret.array, 0, max_size*sizeof(type_t));
-	print("debug: memset complete\n");
+
 	ret.size		= 0;
 	ret.max_size		= max_size;
 	ret.less_than		= less_than;
