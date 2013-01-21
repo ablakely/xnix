@@ -55,9 +55,9 @@ test: all
 	@kvm -kernel build/kernel.bin
 
 github: all
-	@rm build/kernel.bin
-	@rm build/floppy.img
-	@rm build/objects/*
+	@rm -rf build/kernel.bin
+	@rm -rf build/floppy.img
+	@rm -rf build/objects/*
 	@git add --all
 	git commit
 	git push -u origin master
