@@ -110,9 +110,10 @@ void init_paging()
 	frames				= (u32int *)xmalloc(INDEX_FROM_BIT(nframes));
 	memset(frames, 0, INDEX_FROM_BIT(nframes));
 
+	u32int phys;
 	kernel_directory = (page_directory_t*)xmalloc_a(sizeof(page_directory_t));
 	memset(kernel_directory, 0, sizeof(page_directory_t));
-	current_directory = kernel_directory;
+	kernel_directory->physicalAddress = (u32int)kernel_directory->tablesPhysical;
 
 	int i = 0;
 	for (i = XNIX_HEAP_START; i < XNIX_HEAP_START + XNIX_HEAP_INITIAL_SIZE; i += 0x1000)
@@ -138,12 +139,15 @@ void init_paging()
 	// Initialise the kernel heap
 	printc("Creating kernel heap...\n", BLACK, WHITE);
 	xnix_heap = create_heap(XNIX_HEAP_START, XNIX_HEAP_START + XNIX_HEAP_INITIAL_SIZE, 0xCFFFF000, 0, 0);
+
+	current_directory = clone_directory(kernel_directory);
+	switch_page_directory(current_directory);
 }
 
 void switch_page_directory(page_directory_t *dir)
 {
 	current_directory = dir;
-	asm volatile("mov %0, %%cr3":: "r"(&dir->tablesPhysical));
+	asm volatile("mov %0, %%cr3":: "r"(dir->physicalAddress));
 	u32int cr0;
 
 	asm volatile("mov %%cr0, %0": "=r"(cr0));
@@ -163,6 +167,7 @@ page_t *get_page(u32int address, int make, page_directory_t *dir)
 	else if (make) {
 		u32int tmp;
 		dir->tables[table_idx]	= (page_table_t*)xmalloc_ap(sizeof(page_table_t), &tmp);
+		memset(dir->tables[table_idx], 0, 0x1000);
 		dir->tablesPhysical[table_idx] = tmp | 0x7;
 
 		return &dir->tables[table_idx]->pages[address%1024];
@@ -193,4 +198,60 @@ void page_fault(struct regs *r)
 	console_writehex(faulting_address);
 	printf("\n");
 	panic("PAGE FAULT!");
+}
+
+page_directory_t *clone_directory(page_directory_t *src)
+{
+	u32int phys;
+	page_directory_t *dir = (page_directory_t*)xmalloc_ap(sizeof(page_directory_t), &phys);
+	memset(dir, 0, sizeof(page_directory_t));
+
+	u32int offset 		= (u32int)dir->tablesPhysical - (u32int)dir;
+	dir->physicalAddress 	= phys + offset;
+
+	int i;
+	for (i = 0; i < 1024; i++)
+	{
+		if (!src->tables[i])
+			continue;
+
+		if (kernel_directory->tables[i] == src->tables[i])
+		{
+			dir->tables[i]		= src->tables[i];
+			dir->tablesPhysical[i]	= src->tablesPhysical[i];
+		}
+		else
+		{
+			u32int phys;
+			dir->tables[i]		= clone_table(src->tables[i], &phys);
+			dir->tablesPhysical[i]	= phys | 0x07;
+		}
+	}
+
+	return dir;
+}
+
+page_table_t *clone_table(page_table_t *src, u32int *physAddr)
+{
+	page_table_t *table		= (page_table_t*)xmalloc_ap(sizeof(page_table_t), physAddr);
+	memset(table, 0, sizeof(page_directory_t));
+
+	int i;
+	for (i = 0; i < 1024; i++)
+	{
+		if (src->pages[i].frame)
+		{
+
+			alloc_frame(&table->pages[i], 0, 0);
+			if (src->pages[i].present)		table->pages[i].present		= 1;
+			if (src->pages[i].rw)			table->pages[i].rw		= 1;
+			if (src->pages[i].user)			table->pages[i].user		= 1;
+			if (src->pages[i].accessed)		table->pages[i].accessed	= 1;
+			if (src->pages[i].dirty)		table->pages[i].dirty		= 1;
+
+			copy_page_physical(src->pages[i].frame*0x1000, table->pages[i].frame*0x1000);
+		}
+	}
+
+	return table;
 }

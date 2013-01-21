@@ -49,6 +49,7 @@ void isrs_install()
 	idt_set_gate(29, (unsigned)_isr29, 0x08, 0x8E);
 	idt_set_gate(30, (unsigned)_isr30, 0x08, 0x8E);
 	idt_set_gate(31, (unsigned)_isr31, 0x08, 0x8E);
+	idt_set_gate(128, (unsigned)_isr128, 0x08, 0x8E);
 }
 
 

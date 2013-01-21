@@ -10,7 +10,9 @@
 #include <stdio.h>
 #include <tty/console.h>
 #include <tty/colors.h>
+#include <cpu/IA32/tss/tss.h>
 
+extern void tss_flush();
 extern void gdt_flush(u32int);
 struct gdt_entry gdt[5];
 struct gdt_ptr   gp;
@@ -33,7 +35,7 @@ void gdt_install()
 	printc("Installing ", BLACK, LIGHT_GREEN);
 	printc("GDT\n", BLACK, LIGHT_RED);
 
-	gp.limit = (sizeof(struct gdt_entry) * 5) - 1;
+	gp.limit = (sizeof(struct gdt_entry) * 6) - 1;
 	gp.base  = (u32int)&gdt;
 
 	gdt_set_gate(0, 0, 0, 0, 0);
@@ -41,6 +43,8 @@ void gdt_install()
 	gdt_set_gate(2, 0, 0xFFFFFFFF, 0x92, 0xCF);
 	gdt_set_gate(3, 0, 0xFFFFFFFF, 0xFA, 0xCF);
 	gdt_set_gate(4, 0, 0xFFFFFFFF, 0xF2, 0xCF);
+	write_tss(5, 0x10, 0x0);
 
 	gdt_flush((u32int)&gp);
+	tss_flush();
 }

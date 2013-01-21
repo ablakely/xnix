@@ -10,6 +10,13 @@ struct initrd_header
 
 int main(char argc, char **argv)
 {
+	if (argc < 2)
+	{
+		fprintf(stderr, "usage: %s <local file> <remote file>\n", argv[0]);
+		fprintf(stderr, "\nmkinitrd: Tool used for creating an init ramdisk image used for xnix.\n");
+		return -1;
+	}
+
 	int nheaders = (argc-1)/2;
 	struct initrd_header headers[64];
 	printf("initrd: size of header: %d\n", sizeof(struct initrd_header));

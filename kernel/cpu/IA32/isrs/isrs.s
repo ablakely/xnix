@@ -30,6 +30,7 @@ global	_isr28
 global	_isr29
 global	_isr30
 global	_isr31
+global  _isr128
 
 _isr0:
 	cli
@@ -215,6 +216,12 @@ _isr31:
 	cli
 	push	byte 0
 	push	byte 31
+	jmp	isr_common_stub
+
+_isr128:
+	cli
+	push	byte 0
+	push	128
 	jmp	isr_common_stub
 
 extern isr_handler

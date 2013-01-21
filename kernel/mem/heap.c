@@ -16,7 +16,7 @@ heap_t *xnix_heap	= 0;
 s32int find_smallest_hole(u32int size, u8int page_align, heap_t *heap)
 {
 	u32int iterator = 0;
-	while (page_align < heap->index.size)
+	while (iterator < heap->index.size)
 	{
 		header_t *header	= (header_t *)lookup_ordered_array(iterator, &heap->index);
 		if (page_align > 0)

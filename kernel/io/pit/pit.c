@@ -11,6 +11,7 @@
 #include <tty/spinner.h>
 #include <tty/colors.h>
 #include <cpu/IA32/handlers.h>
+#include <proc/task.h>
 
 int timer_ticks = 0;
 int uptime = 0;
@@ -19,6 +20,7 @@ int spinneri;
 void timer_handler(struct regs *r)
 {
 	timer_ticks++;
+	switch_task();
 
 	if (timer_ticks % 18 == 0)
 	{

@@ -37,6 +37,7 @@ section .text
 [EXTERN xnix_main]
 
 start:
+	push	esp
 	push	ebx
 	cli
 

@@ -20,17 +20,21 @@
 #include <mem/malloc.h>
 #include <fs/fs.h>
 #include <fs/initrd.h>
+#include <proc/task.h>
+#include <syscall.h>
 
 #define halt() for(;;);
+extern u32int  start_esp;
 
-int xnix_main(struct multiboot *mboot_ptr)
+int xnix_main(struct multiboot *mboot_ptr, u32int initial_stack)
 {
 	extern u32int placement_address;
-	int kernel_ticks = 0;
+	int kernel_ticks 	= 0;
+	start_esp		= initial_stack;
 
 	init_console();
 	print("xnix 0.0.1 (by Aaron Blakely)\n\n");
-	printf("mboot_mod_count: %x\n", mboot_ptr->mods_addr);
+
 	init_descriptors();
 
 	ASSERT(mboot_ptr->mods_count > 0);
@@ -45,36 +49,14 @@ int xnix_main(struct multiboot *mboot_ptr)
 	keyboard_install();	// install the keboard
 
 	init_paging();
+	initialise_tasking();
 
 	fs_root			= initialise_initrd(initrd_location);
 
-	int i = 0;
-	struct dirent *node = 0;
-	while((node = readdir_fs(fs_root, i)) != 0)
-	{
-		printf("Found: %s\n", node->name);
-		fs_node_t *fsnode = finddir_fs(fs_root, node->name);
+	init_syscalls();
+	switch_to_user_mode();
 
-		if ((fsnode->flags & 0x7) == FS_DIRECTORY)
-		{
-			printf("Is dir:\n");
-		}
-		else
-		{
-			printf("contents:\n");
-			char buf[256];
-			u32int sz = read_fs(fsnode, 0, 256, buf);
-			int j;
-			for (j = 0; j < sz; j++)
-			{
-				printf("%c", buf[j]);
-			}
-
-			print("\n");
-		}
-		i++;
-	}
-
+	syscall_console_writehex("Hello world!\n");
 
 	// loop forever to keep the system alive
 	for (;;)
