@@ -5,12 +5,14 @@
  */
 
 #include "paging.h"
+#include "heap.h"
 #include "malloc.h"
 #include <stdint.h>
 #include <iomem.h>
 #include <stdio.h>
 #include <panic.h>
 #include <tty/console.h>
+#include <tty/colors.h>
 #include <cpu/IA32/handlers.h>
 
 page_directory_t *kernel_directory = 0;
@@ -19,6 +21,7 @@ page_directory_t *current_directory = 0;
 u32int *frames;
 u32int nframes;
 
+extern heap_t *xnix_heap;
 extern u32int placement_address;
 
 #define INDEX_FROM_BIT(a)  (a/(8*4))
@@ -112,14 +115,29 @@ void init_paging()
 	current_directory = kernel_directory;
 
 	int i = 0;
+	for (i = XNIX_HEAP_START; i < XNIX_HEAP_START + XNIX_HEAP_INITIAL_SIZE; i += 0x1000)
+	{
+		get_page(i, 1, kernel_directory);
+	}
+
+	i = 0;
 	while (i < placement_address)
 	{
 		alloc_frame(get_page(i, 1, kernel_directory), 0, 0);
 		i += 0x1000;
 	}
 
+	for (i = XNIX_HEAP_START; i < XNIX_HEAP_START + XNIX_HEAP_INITIAL_SIZE; i += 0x1000)
+	{
+		alloc_frame(get_page(i, 1, kernel_directory), 0, 0);
+	}
+
 	interrupt_install_handler(14, page_fault, "page fault handler");
 	switch_page_directory(kernel_directory);
+
+	// Initialise the kernel heap
+	printc("Initilizing kernel heap...\n", BLACK, WHITE);
+	xnix_heap = create_heap(XNIX_HEAP_START, XNIX_HEAP_START + XNIX_HEAP_INITIAL_SIZE, 0xCFFFF000, 0, 0);
 }
 
 void switch_page_directory(page_directory_t *dir)
@@ -165,7 +183,7 @@ void page_fault(struct regs *r)
 	int reserved	= r->err_code & 0x8;
 	int id		= r->err_code & 0x10;
 
-	printf("Page Fault!  ( ");
+	printf("\n\n\n\nPage Fault!  ( ");
 	if (present)	printf("present ");
 	if (rw)		printf("read-only ");
 	if (us)		printf("user-mode ");

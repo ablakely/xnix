@@ -21,3 +21,13 @@ void panic(char *err)
 		// do nothing
 	}
 }
+
+void panic_assert(const char *file, u32int line, const char *desc)
+{
+	asm volatile("cli");
+
+	printc("ASSERTION FAILED:", BLACK, RED);
+	printf("%s at %s : %d\n", desc, file, line);
+
+	for(;;);
+}

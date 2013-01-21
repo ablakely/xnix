@@ -9,5 +9,6 @@ u32int xmalloc_a(u32int sz);
 u32int xmalloc_p(u32int sz, u32int *phys);
 u32int xmalloc_ap(u32int sz, u32int *phys);
 u32int xmalloc(u32int sz);
+void xfree(void *p);
 
 #endif

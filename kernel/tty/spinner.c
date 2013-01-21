@@ -10,7 +10,7 @@
 #include "console.h"
 #include "colors.h"
 
-int spinner_stop = 0;
+int spinner_stop = 1;
 
 void advance_spinner()
 {

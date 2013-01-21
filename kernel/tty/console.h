@@ -12,9 +12,9 @@ struct cursor_info {
 };
 
 void init_console();
-static void move_cursor();
+void move_cursor();
 void set_cursor_point(u8int x, u8int y);
-static void scroll();
+void scroll();
 void print_to_point(char *text, u8int column, u8int line, u8int backColor, u8int foreColor);
 void printc_to_point(char c, u8int column, u8int line, u8int backColor, u8int foreColor);
 void console_writehex(u32int n);

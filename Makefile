@@ -32,8 +32,10 @@ all:
 	@$(CC) -m32 -c kernel/io/pit/pit.c $(CFLAGS) -o $(OBJDIR)/pit.o
 	@$(CC) -m32 -c kernel/tty/spinner.c $(CFLAGS) -o $(OBJDIR)/spinner.o
 	@$(CC) -m32 -c kernel/lib/panic.c $(CFLAGS) -o $(OBJDIR)/panic.o
-	@$(CC) -m32 -c kernel/mem/malloc.c $(CFLAGS) -o $(OBJDIR)/malloc.o
+	@$(CC) -m32 -c kernel/mem/ordered_array.c $(CFLAGS) -o $(OBJDIR)/ordered_array.o
 	@$(CC) -m32 -c kernel/mem/paging.c $(CFLAGS) -o $(OBJDIR)/paging.o
+	@$(CC) -m32 -c kernel/mem/malloc.c $(CFLAGS) -o $(OBJDIR)/malloc.o
+	@$(CC) -m32 -c kernel/mem/heap.c $(CFLAGS) -o $(OBJDIR)/heap.o
 
 	@echo "Running the assembler..."
 	@$(AS) $(ASFLAGS) kernel/cpu/IA32/boot/prep/head.s -o $(OBJDIR)/head.o

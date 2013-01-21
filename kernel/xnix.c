@@ -34,11 +34,7 @@ int xnix_main(struct multiboot_info *mboot_ptr)
 	keyboard_install();	// install the keboard
 
 	init_paging();
-
 	print("\n\n");
-
-//	u32int *ptr = (u32int*)0xA000000;
-//	u32int dpf = *ptr;
 
 
 	// loop forever to keep the system alive

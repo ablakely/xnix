@@ -34,7 +34,8 @@ void init_console()
 
 	clear_vram();
 }
-static void move_cursor()
+
+void move_cursor()
 {
 	// screen = 80 chars wide (while in this mode)
 	u16int cursorLocation = cursor->y * 80 + cursor->x;
@@ -52,7 +53,7 @@ void set_cursor_point(u8int x, u8int y)
 	cursor->y      = y;
 }
 
-static void scroll()
+void scroll()
 {
 	int attributeByte = (0 << 4) | (15 & 0x0F);
 	u16int blank	    = 0x20 | (attributeByte << 8);
