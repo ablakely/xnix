@@ -25,7 +25,6 @@ mboot:
 	dd XBOOT_HEADER_FLAGS		; Boot Flags
 	dd XBOOT_CHECKSUM		; a checksum of the MAGIC and FLAGS
 
-	dd xnix_main			; xnix_main() from xnix.c
 	dd mboot
 	dd code
 	dd bss

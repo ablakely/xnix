@@ -36,6 +36,8 @@ all:
 	@$(CC) -m32 -c kernel/mem/paging.c $(CFLAGS) -o $(OBJDIR)/paging.o
 	@$(CC) -m32 -c kernel/mem/malloc.c $(CFLAGS) -o $(OBJDIR)/malloc.o
 	@$(CC) -m32 -c kernel/mem/heap.c $(CFLAGS) -o $(OBJDIR)/heap.o
+	@$(CC) -m32 -c kernel/fs/fs.c $(CFLAGS) -o $(OBJDIR)/fs.o
+	@$(CC) -m32 -c kernel/fs/initrd.c $(CFLAGS) -o $(OBJDIR)/initrd.o
 
 	@echo "Running the assembler..."
 	@$(AS) $(ASFLAGS) kernel/cpu/IA32/boot/prep/head.s -o $(OBJDIR)/head.o
@@ -67,13 +69,14 @@ clean:
 	@rm -rf etc/blog.txt etc/snapshot.txt
 
 floppy: all
-	@mkdir tmp
-	@dd if=/dev/zero of=tmp/pad bs=1 count=750
-	@cat etc/stage1 etc/stage2 tmp/pad build/kernel.bin > build/floppy.img
-	@rm -rf tmp
+	@sudo /sbin/losetup /dev/loop0 etc/floppy.img
+	@sudo mount /dev/loop0 /mnt2
+	@sudo cp build/kernel.bin /mnt2/kernel
+	@sudo cp kernel/initrd.img /mnt2/initrd
+	@sudo umount /dev/loop0
+	@sudo /sbin/losetup -d /dev/loop0
+	
 	@echo "Done: build/floppy.img"
 
 bochs: floppy
 	@cd etc;xterm bochs&
-	@echo "Use kernel 200+`stat -c%b build/kernel.bin`"
-

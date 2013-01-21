@@ -19,7 +19,6 @@ u32int xmalloc_int(u32int sz, int align, u32int *phys)
 {
 	if (xnix_heap != 0)
 	{
-		print("DEBUG: using heap based alloc\n");
 		void *addr = alloc(sz, (u8int)align, xnix_heap);
 		if (phys != 0)
 		{
