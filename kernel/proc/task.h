@@ -18,5 +18,7 @@ void 	task_switch();
 int 	fork();
 void 	move_stack(void *new_stack_start, u32int size);
 int 	getpid();
+void	switch_to_user_mode();
+
 
 #endif

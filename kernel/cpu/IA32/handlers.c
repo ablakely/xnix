@@ -8,6 +8,7 @@
 #include <stdint.h>
 #include <stdio.h>
 #include <iomem.h>
+#include <panic.h>
 #include "idt/idt.h"
 #include "isrs/isrs.h"
 #include "irqs/irqs.h"
@@ -46,8 +47,10 @@ void isr_handler(struct regs *r)
 			handler(r);
 		}
 		else {
-			printf("PANIC: Encountered fatal error: [0x%d] %s\n", r->int_no, exception_messages[r->int_no]);
-			for(;;);
+			char *err;
+			sprintf(err, "Encountered fatal error: [0x%d] %s\n", r->int_no, exception_messages[r->int_no]);
+
+			panic(err, r);
 		}
 	}
 }

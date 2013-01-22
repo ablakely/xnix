@@ -80,7 +80,7 @@ void alloc_frame(page_t *page, int is_kernel, int is_writeable)
 		u32int idx = first_frame();
 		if (idx == (u32int)-1)
 		{
-			panic("No free frames left -- Out of memory.");
+			panic("No free frames left -- Out of memory.", 0);
 		}
 		set_frame(idx*0x1000);
 		page->present = 1;
@@ -188,16 +188,14 @@ void page_fault(struct regs *r)
 	int reserved	= r->err_code & 0x8;
 	int id		= r->err_code & 0x10;
 
-	printf("\n\n\n\nPage Fault!  ( ");
-	if (present)	printf("present ");
-	if (rw)		printf("read-only ");
-	if (us)		printf("user-mode ");
-	if (reserved)	printf("reserved ");
+	printf("Page Fault detected: (");
+        if (present)    printf("present, ");
+        if (rw)         printf("readonly, ");
+        if (us)         printf("usermode, ");
+        if (reserved)   printf("reserved");
 
-	printf(") at 0x");
-	console_writehex(faulting_address);
-	printf("\n");
-	panic("PAGE FAULT!");
+        printf(") at address: %x\n", faulting_address);
+	panic("Page Fault detected.", r);
 }
 
 page_directory_t *clone_directory(page_directory_t *src)
