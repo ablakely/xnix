@@ -20,7 +20,6 @@ extern void irq13();
 extern void irq14();
 extern void irq15();
 
-void irq_remap(void);
 void irq_install();
 
 #endif

@@ -13,6 +13,7 @@ struct tss_entry_struct
         u32int          ss1;
         u32int          esp2;
         u32int          ss2;
+	u32int		cr3;
         u32int          eip;
         u32int          eflags;
         u32int          eax;

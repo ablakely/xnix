@@ -24,7 +24,7 @@ void gdt_set_gate(int num, u32int base, u32int limit, u8int access, u8int gran)
 	gdt[num].base_high	= (base >> 24) & 0xFF;
 
 	gdt[num].limit_low	= (limit & 0xFFFF);
-	gdt[num].granularity	= ((limit >> 16) & 0x0F);
+	gdt[num].granularity	= (limit >> 16) & 0x0F;
 
 	gdt[num].granularity   |= gran & 0xF0;
 	gdt[num].access		= access;

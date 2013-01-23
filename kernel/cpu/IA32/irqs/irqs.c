@@ -10,27 +10,12 @@
 #include <tty/console.h>
 #include <tty/colors.h>
 #include <cpu/IA32/idt/idt.h>
-
-
-void irq_remap(void)
-{
-	outportb(0x20, 0x11);
-	outportb(0xA0, 0x11);
-	outportb(0x21, 0x20);
-	outportb(0xA1, 0x28);
-	outportb(0x21, 0x04);
-	outportb(0xA1, 0x02);
-	outportb(0x21, 0x01);
-	outportb(0xA1, 0x01);
-	outportb(0x21, 0x0);
-	outportb(0xA1, 0x0);
-}
+#include <cpu/IA32/isrs/isrs.h>
 
 void irq_install()
 {
 	printc("Installing ", BLACK, LIGHT_GREEN);
 	printc("IRQs\n", BLACK, LIGHT_RED);
-	irq_remap();
 
 	idt_set_gate(32, (unsigned)irq0, 0x08, 0x8E);
 	idt_set_gate(33, (unsigned)irq1, 0x08, 0x8E);
@@ -48,5 +33,6 @@ void irq_install()
 	idt_set_gate(45, (unsigned)irq13, 0x08, 0x8E);
 	idt_set_gate(46, (unsigned)irq14, 0x08, 0x8E);
 	idt_set_gate(47, (unsigned)irq15, 0x08, 0x8E);
+	idt_set_gate(128, (unsigned)_isr128, 0x08, 0x8E);	// this is used for syscalls
 }
 

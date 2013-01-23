@@ -12,10 +12,27 @@
 #include <cpu/IA32/gdt/gdt.h>
 #include <cpu/IA32/idt/idt.h>
 
+void irq_remap(void)
+{
+        outportb(0x20, 0x11);
+        outportb(0xA0, 0x11);
+        outportb(0x21, 0x20);
+        outportb(0xA1, 0x28);
+        outportb(0x21, 0x04);
+        outportb(0xA1, 0x02);
+        outportb(0x21, 0x01);
+        outportb(0xA1, 0x01);
+        outportb(0x21, 0x0);
+        outportb(0xA1, 0x0);
+}
+
+
 void isrs_install()
 {
 	printc("Installing ", BLACK, LIGHT_GREEN);
 	printc("ISRs\n", BLACK, LIGHT_RED);
+
+	irq_remap();
 
 	idt_set_gate(0, (unsigned)_isr0, 0x08, 0x8E);
 	idt_set_gate(1, (unsigned)_isr1, 0x08, 0x8E);
@@ -49,7 +66,6 @@ void isrs_install()
 	idt_set_gate(29, (unsigned)_isr29, 0x08, 0x8E);
 	idt_set_gate(30, (unsigned)_isr30, 0x08, 0x8E);
 	idt_set_gate(31, (unsigned)_isr31, 0x08, 0x8E);
-	idt_set_gate(128, (unsigned)_isr128, 0x08, 0x8E);
 }
 
 

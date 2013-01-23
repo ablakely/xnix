@@ -15,11 +15,6 @@
 
 void syscall_handler(struct regs *regs);
 
-DEFN_SYSCALL1(print, 0, char *);
-DEFN_SYSCALL1(console_writehex, 1, const char*);
-DEFN_SYSCALL1(console_writedec, 2, const char*);
-
-
 void *syscalls[3] =
 {
 	&print,
@@ -55,5 +50,11 @@ void syscall_handler(struct regs *regs)
 		pop %%ebx;	\
 		pop %%ebx;	\
 				" :  "=a"(ret) : "r" (regs->edi), "r" (regs->esi), "r" (regs->edx), "r" (regs->ecx), "r" (regs->ebx), "r" (location));
+	regs->eax = ret;
 }
+
+DEFN_SYSCALL1(print, 0, char *);
+DEFN_SYSCALL1(console_writehex, 1, const char*);
+DEFN_SYSCALL1(console_writedec, 2, const char*);
+
 

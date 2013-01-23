@@ -172,22 +172,22 @@ void move_stack(void *new_stack_start, u32int size)
 
 void switch_to_user_mode()
 {
-	asm volatile("		\
-		cli;		\
-		mov $0x23, %ax;	\
-		mov %ax, %ds;	\
-		mov %ax, %es;	\
-		mov %ax, %fs;	\
-		mov %ax, %gs;	\
-				\
-		mov %esp, %eax;	\
-		pushl $0x23;	\
-		pushl %eax;	\
-		pushf;		\
-		pushl $0x18;	\
-		push $1f;	\
-		iret;		\
-	1:			");
-
+	printf("Attempting to switch to user mode.\n");
+	asm volatile("			\
+		cli;			\
+		mov $0x23, %ax;		\
+		mov %ax, %ds;		\
+		mov %ax, %es;		\
+		mov %ax, %fs;		\
+		mov %ax, %gs;		\
+					\
+		mov %esp, %eax;		\
+		pushl $0x23;		\
+		pushl %eax;		\
+		pushf;			\
+		pushl $0x1B;		\
+		push $1f;		\
+		iret;			\
+	1:				");
 }
 
