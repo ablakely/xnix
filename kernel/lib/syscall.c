@@ -15,18 +15,24 @@
 
 void syscall_handler(struct regs *regs);
 
-void *syscalls[3] =
+int syscall_print(char *c)
+{
+        int a;
+        asm volatile("int $0x80" : "=a" (a) : "0" (0), "b" ((int)c)); 
+        return a;
+}
+
+
+void *syscalls[1] =
 {
 	&print,
-	&console_writehex,
-	&console_writedec,
 };
 
-u32int num_syscalls = 3;
+u32int num_syscalls = 1;
 
 void init_syscalls()
 {
-	interrupt_install_handler(0x80, &syscall_handler, "syscall handler");
+	interrupt_install_handler(0x80, syscall_handler, "syscall handler");
 }
 
 void syscall_handler(struct regs *regs)
@@ -53,8 +59,5 @@ void syscall_handler(struct regs *regs)
 	regs->eax = ret;
 }
 
-DEFN_SYSCALL1(print, 0, char *);
-DEFN_SYSCALL1(console_writehex, 1, const char*);
-DEFN_SYSCALL1(console_writedec, 2, const char*);
 
 

@@ -57,7 +57,7 @@ int xnix_main(struct multiboot *mboot_ptr, u32int initial_stack)
 
 	switch_to_user_mode();
 
-	syscall_console_writehex("Hello world!\n");
+	syscall_print("Hello world!\n");
 
 	// loop forever to keep the system alive
 	for (;;)

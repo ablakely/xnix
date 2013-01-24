@@ -6,7 +6,7 @@ AS = nasm
 LK = i586-elf-ld
 OBJECTS = $(OBJDIR)/*.o
 EXECTUABLE = ./kernel
-CFLAGS = -m32 -fstrength-reduce -fno-builtin-puts -fno-builtin-printf -fno-builtin-function -finline-functions -nostdinc -fno-stack-protector -fomit-frame-pointer -nostdlib  $(IDIRS)
+CFLAGS = -g -m32 -fstrength-reduce -fno-builtin-puts -fno-builtin-printf -fno-builtin-function -finline-functions -nostdinc -fno-stack-protector -fomit-frame-pointer -nostdlib  $(IDIRS)
 LDFLAGS = -Tetc/link.ld -melf_i386
 ASFLAGS = -Werror -felf
 IDIRS = -Ikernel/ -Ikernel/lib -Ikernel/io
@@ -57,9 +57,6 @@ all:
 
 	@echo "Build succuessful: kernel=build/kernel.bin"
 
-test: all
-	@kvm -kernel build/kernel.bin
-
 github: all
 	@rm -rf build/kernel.bin
 	@rm -rf build/floppy.img
@@ -87,3 +84,6 @@ floppy: all
 
 bochs: floppy
 	@cd etc;xterm bochs&
+
+kvm: floppy
+	@kvm -fda build/floppy.img&

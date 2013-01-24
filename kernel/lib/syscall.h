@@ -2,6 +2,7 @@
 #define SYSCALL_H
 
 #include "stdint.h"
+#include "stdio.h"
 
 #define DECL_SYSCALL0(fn)			int syscall_##fn();
 #define DECL_SYSCALL1(fn,p1)			int syscall_##fn(p1);
@@ -60,8 +61,6 @@ int syscall_##fn(P1 p1, P2 p2, P3 p3, P4 p4, P5 p5)											\
 
 void init_syscalls();
 
-DECL_SYSCALL1(print, char*);
-DECL_SYSCALL1(console_writehex, const char*);
-DECL_SYSCALL1(console_writedec, const char*);
+int syscall_print(char *c);
 
 #endif
