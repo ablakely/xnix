@@ -240,7 +240,7 @@ isr_common_stub:
 
 	call	isr_handler
 
-	pop	ebx
+	pop	eax
 	mov	ds, bx
 	mov	es, bx
 	mov 	fs, bx
