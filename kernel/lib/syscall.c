@@ -15,13 +15,7 @@
 
 void syscall_handler(struct regs *regs);
 
-int syscall_print(char *c)
-{
-        int a;
-        asm volatile("int $0x80" : "=a" (a) : "0" (0), "b" ((int)c)); 
-        return a;
-}
-
+DEFN_SYSCALL1(print, 0, char*);
 
 void *syscalls[1] =
 {
@@ -30,13 +24,11 @@ void *syscalls[1] =
 
 u32int num_syscalls = 1;
 
-void init_syscalls()
-{
-	interrupt_install_handler(0x80, syscall_handler, "syscall handler");
-}
-
 void syscall_handler(struct regs *regs)
 {
+
+	printf("recieved syscall: %i\n", regs->eax);
+
 	if (regs->eax >= num_syscalls)
 		return;
 
@@ -59,5 +51,8 @@ void syscall_handler(struct regs *regs)
 	regs->eax = ret;
 }
 
-
+void init_syscalls()
+{
+        interrupt_install_handler(0x80, syscall_handler, "syscall handler");
+}
 

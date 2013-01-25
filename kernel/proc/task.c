@@ -34,6 +34,7 @@ void initialise_tasking()
 	current_task->eip		= 0;
 	current_task->page_directory	= current_directory;
 	current_task->next		= 0;
+	current_task->kernel_stack	= xmalloc_a(KERNEL_STACK_SIZE);
 
 	asm volatile("sti");
 	printf("Multitasking enabled.\n");
@@ -107,8 +108,13 @@ void switch_task()
 		current_task	= ready_queue;
 	}
 
+	eip			= current_task->eip;
 	esp			= current_task->esp;
 	ebp			= current_task->ebp;
+
+	current_directory = current_task->page_directory;
+
+	set_kernel_stack(current_task->kernel_stack+KERNEL_STACK_SIZE);
 
 	asm volatile("			\
 		cli;			\
@@ -172,6 +178,8 @@ void move_stack(void *new_stack_start, u32int size)
 
 void switch_to_user_mode()
 {
+	set_kernel_stack(current_task->kernel_stack+KERNEL_STACK_SIZE);
+
 	printf("Attempting to switch to user mode.\n");
 	asm volatile("			\
 		cli;			\
