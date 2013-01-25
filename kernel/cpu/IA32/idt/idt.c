@@ -34,5 +34,4 @@ void idt_install()
 
 	memset(&idt, 0, sizeof(struct idt_entry) * 256);
 	isrs_install();
-	idt_flush();
 }

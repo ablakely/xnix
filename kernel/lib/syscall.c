@@ -26,8 +26,7 @@ u32int num_syscalls = 1;
 
 void syscall_handler(struct regs *regs)
 {
-
-	printf("recieved syscall: %i\n", regs->eax);
+	printf("syscall recieved\n");
 
 	if (regs->eax >= num_syscalls)
 		return;

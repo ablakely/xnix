@@ -39,16 +39,25 @@ void isr_handler(struct regs *r)
 {
 	void (*handler)(struct regs *r);
 
-	if (r->int_no < 32)
+	u8int int_no = r->int_no & 0xFF;		// for conversion of 8-bit to 32bit
+
+	if (int_no < 32)
 	{
-		if (interrupt_handlers[r->int_no] != 0)
+		if (interrupt_handlers[int_no] != 0)
 		{
-			handler = interrupt_handlers[r->int_no];
+			handler = interrupt_handlers[int_no];
 			handler(r);
 		}
 		else {
 			char *err;
-			sprintf(err, "Encountered fatal error: [0x%d] %s\n", r->int_no, exception_messages[r->int_no]);
+			if (exception_messages[int_no] != 0)
+			{
+				sprintf(err, "Encountered fatal error: [0x%d] %s\n", int_no, exception_messages[int_no]);
+			}
+			else
+			{
+				sprintf(err, "Encounterd unmasked interrupt: %x", int_no);
+			}
 
 			panic(err, r);
 		}
@@ -58,16 +67,17 @@ void isr_handler(struct regs *r)
 void irq_handler(struct regs *r)
 {
 	void (*handler)(struct regs *r);
+	u8int int_no = r->int_no & 0xFF;                // for conversion of 8-bit to 32bit
 
-	if (r->int_no >= 40)
+	if (int_no >= 40)
 	{
 		outportb(0xA0, 0x20);
 	}
 
 	outportb(0x20, 0x20);
-	if (interrupt_handlers[r->int_no] != 0)
+	if (interrupt_handlers[int_no] != 0)
 	{
-		handler = interrupt_handlers[r->int_no];
+		handler = interrupt_handlers[int_no];
 		handler(r);
 	}
 }

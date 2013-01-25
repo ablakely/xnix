@@ -13,8 +13,7 @@
 
 void panic(char *err, struct regs *regs)
 {
-	printc("\nPANIC: ", BLACK, RED);
-	printf("%s\n", err);
+	printf("PANIC: %s\n", err);
 
 	if (regs)
 	{

@@ -51,6 +51,7 @@ int fork()
 	new_task->esp			= new_task->ebp		= 0;
 	new_task->eip			= 0;
 	new_task->page_directory	= directory;
+	new_task->kernel_stack		= xmalloc_a(KERNEL_STACK_SIZE);
 	new_task->next			= 0;
 
 	task_t *tmp_task		= (task_t*)ready_queue;
@@ -182,7 +183,6 @@ void switch_to_user_mode()
 
 	printf("Attempting to switch to user mode.\n");
 	asm volatile("			\
-		cli;			\
 		mov $0x23, %ax;		\
 		mov %ax, %ds;		\
 		mov %ax, %es;		\
@@ -190,12 +190,13 @@ void switch_to_user_mode()
 		mov %ax, %gs;		\
 					\
 		mov %esp, %eax;		\
-		pushl $0x23;		\
-		pushl %eax;		\
+		push $0x23;		\
+		push %eax;		\
 		pushf;			\
-		pushl $0x1B;		\
+		push $0x1B;		\
 		push $1f;		\
 		iret;			\
 	1:				");
+
 }
 
