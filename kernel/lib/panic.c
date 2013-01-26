@@ -11,7 +11,7 @@
 #include <tty/spinner.h>
 #include <tty/colors.h>
 
-void panic(char *err, struct regs *regs)
+void panic(char *err, registers_t *regs)
 {
 	printf("PANIC: %s\n", err);
 

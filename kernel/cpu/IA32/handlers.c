@@ -35,24 +35,27 @@ void interrupt_remove_handler(u8int n)
 	interrupt_handlers[n] = 0;
 }
 
-void isr_handler(registers_t *r)
+void isr_handler(registers_t r)
 {
-	u8int int_no = r->int_no & 0xFF;		// for conversion of 8-bit to 32bit
+	u8int int_no = r.int_no & 0xFF;		// for conversion of 8-bit to 32bit
 
-	if (interrupt_handlers[int_no] != 0)
+	if (int_no < 32 || int_no > 47)
 	{
-		isr_t handler = interrupt_handlers[int_no];
-		handler(r);
-	}
-	else
-	{
-		panic("Encountered unmaskable interrupt!", r);
+		if (interrupt_handlers[int_no] != 0)
+		{
+			isr_t handler = interrupt_handlers[int_no];
+			handler(&r);
+		}
+		else
+		{
+			panic("Encountered unmaskable interrupt!", &r);
+		}
 	}
 }
 
-void irq_handler(registers_t *r)
+void irq_handler(registers_t r)
 {
-	u8int int_no = r->int_no & 0xFF;                // for conversion of 8-bit to 32bit
+	u8int int_no = r.int_no & 0xFF;                // for conversion of 8-bit to 32bit
 
 	if (int_no >= 40)
 	{
@@ -63,6 +66,6 @@ void irq_handler(registers_t *r)
 	if (interrupt_handlers[int_no] != 0)
 	{
 		isr_t handler = interrupt_handlers[int_no];
-		handler(r);
+		handler(&r);
 	}
 }

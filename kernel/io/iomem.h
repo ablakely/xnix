@@ -13,10 +13,10 @@
 
 typedef struct regs
 {
-	unsigned int gs, fs, es, ds;
-	unsigned int edi, esi, ebp, esp, ebx, edx, ecx, eax;
-	unsigned int int_no, err_code;
-	unsigned int eip, cs, eflags, useresp, ss;
+	u32int	gs, fs, es, ds;
+	u32int	edi, esi, ebp, esp, ebx, edx, ecx, eax;
+	u32int	err_code, int_no;
+	u32int	eip, cs, eflags, useresp, ss;
 } registers_t;
 
 void outportb(u16int port, u8int val);

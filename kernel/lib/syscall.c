@@ -13,7 +13,7 @@
 #include <tty/colors.h>
 #include <cpu/IA32/handlers.h>
 
-void syscall_handler(struct regs *regs);
+void syscall_handler(registers_t *regs);
 
 DEFN_SYSCALL1(print, 0, char*);
 
@@ -24,7 +24,7 @@ void *syscalls[1] =
 
 u32int num_syscalls = 1;
 
-void syscall_handler(struct regs *regs)
+void syscall_handler(registers_t *regs)
 {
 	printf("syscall recieved\n");
 
@@ -52,6 +52,6 @@ void syscall_handler(struct regs *regs)
 
 void init_syscalls()
 {
-        interrupt_install_handler(0x80, syscall_handler, "syscall handler");
+        interrupt_install_handler(0x7f, &syscall_handler, "syscall handler");
 }
 

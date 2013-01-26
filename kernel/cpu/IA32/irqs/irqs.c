@@ -34,7 +34,7 @@ void irq_install()
 	idt_set_gate(45, (u32int)irq13, 0x08, 0x8E);
 	idt_set_gate(46, (u32int)irq14, 0x08, 0x8E);
 	idt_set_gate(47, (u32int)irq15, 0x08, 0x8E);
-	idt_set_gate(128, (u32int)_isr128, 0x08, 0x8E);	// this is used for syscalls
+	idt_set_gate(127, (u32int)_isr127, 0x08, 0x8E);	// this is used for syscalls
 
 	idt_flush((u32int)&idtp);
 }

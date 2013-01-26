@@ -43,10 +43,10 @@ int xnix_main(struct multiboot *mboot_ptr, u32int initial_stack)
 
 	placement_address	= initrd_end;
 
-	__asm__ volatile("sti"); // safe to allows IRQs now.
-
 	timer_install(50);	// set the PIT to run at 50Hz.
 	keyboard_install();	// install the keboard
+
+	asm volatile("sti");	// re-enable interrupts
 
 	init_paging();
 	initialise_tasking();

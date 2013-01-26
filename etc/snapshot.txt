@@ -8,18 +8,18 @@ PANIC: Encountered unmaskable interrupt!
 
 
 Register states at interrupt:
-  eax: ................. 0xe739f0
-  ebx: ................. 0xf84dc0
-  ecx: ................. 0xe3fef0
-  edx: ................. 0xf841f0
-  esp: ................. 0x133f0
-  ebp: ................. 0xff53f0
-  eip: ................. 0xefd2f0
+  eax: ................. 0x103b37
+  ebx: ................. 0x0
+  ecx: ................. 0x0
+  edx: ................. 0x80
+  esp: ................. 0xa
+  ebp: ................. 0xb03d5
+  eip: ................. 0xdfffffb0
   cr0: ................. 0xe0000011
   cr3: ................. 0x1a3000
-  Interrupt Number: .... 0xf859f0
-  Error Code: .......... 0xe82ef0
-  EFLAGS: .............. 0xe6f2f0
-  User ESP: ............ 0xfe6ef0
+  Interrupt Number: .... 0x1b
+  Error Code: .......... 0x282
+  EFLAGS: .............. 0x123890ab
+  User ESP: ............ 0xc0080ff4
 
 

@@ -30,198 +30,198 @@ global	_isr28
 global	_isr29
 global	_isr30
 global	_isr31
-global	_isr128
+global	_isr127
 
 _isr0:
 	cli
 	push	byte 0
-	push	0
+	push	byte 0
 	jmp	isr_common_stub
 
 _isr1:
 	cli
 	push	byte 0
-	push	1
+	push	byte 1
 	jmp	isr_common_stub
 
 _isr2:
 	cli
 	push	byte 0
-	push	2
+	push	byte 2
 	jmp	isr_common_stub
 
 _isr3:
 	cli
 	push	byte 0
-	push	3
+	push	byte 3
 	jmp	isr_common_stub
 
 _isr4:
 	cli
 	push	byte 0
-	push	4
+	push	byte 4
 	jmp	isr_common_stub
 
 _isr5:
 	cli
 	push	byte 0
-	push	5
+	push	byte 5
 	jmp	isr_common_stub
 
 _isr6:
 	cli
 	push	byte 0
-	push	6
+	push	byte 6
 	jmp	isr_common_stub
 
 _isr7:
 	cli
 	push	byte 0
-	push	7
+	push	byte 7
 	jmp	isr_common_stub
 
 _isr8:
 	cli
-	push	8
+	push	byte 8
 	jmp	isr_common_stub
 
 _isr9:
 	cli
 	push	byte 0
-	push	9
+	push	byte 9
 	jmp	isr_common_stub
 
 _isr10:
 	cli
-	push	10
+	push	byte 10
 	jmp	isr_common_stub
 
 _isr11:
 	cli
-	push	11
+	push	byte 11
 	jmp	isr_common_stub
 
 _isr12:
 	cli
-	push	12
+	push	byte 12
 	jmp	isr_common_stub
 
 _isr13:
 	cli
-	push	13
+	push	byte 13
 	jmp	isr_common_stub
 
 _isr14:
 	cli
-	push	14
+	push	byte 14
 	jmp	isr_common_stub
 
 _isr15:
 	cli
 	push	byte 0
-	push	15
+	push	byte 15
 	jmp	isr_common_stub
 
 _isr16:
 	cli
 	push	byte 0
-	push	16
+	push	byte 16
 	jmp	isr_common_stub
 
 _isr17:
 	cli
 	push	byte 0
-	push	17
+	push	byte 17
 	jmp	isr_common_stub
 
 _isr18:
 	cli
 	push	byte 0
-	push	18
+	push	byte 18
 	jmp	isr_common_stub
 
 _isr19:
 	cli
 	push	byte 0
-	push	19
+	push	byte 19
 	jmp	isr_common_stub
 
 _isr20:
 	cli
 	push	byte 0
-	push	20
+	push	byte 20
 	jmp	isr_common_stub
 
 _isr21:
 	cli
 	push	byte 0
-	push	21
+	push	byte 21
 	jmp	isr_common_stub
 
 _isr22:
 	cli
 	push	byte 0
-	push	22
+	push	byte 22
 	jmp	isr_common_stub
 
 _isr23:
 	cli
 	push	byte 0
-	push	23
+	push	byte 23
 	jmp	isr_common_stub
 
 _isr24:
 	cli
 	push	byte 0
-	push	24
+	push	byte 24
 	jmp	isr_common_stub
 
 _isr25:
 	cli
 	push	byte 0
-	push	25
+	push	byte 25
 	jmp	isr_common_stub
 
 _isr26:
 	cli
 	push	byte 0
-	push	26
+	push	byte 26
 	jmp	isr_common_stub
 
 _isr27:
 	cli
 	push	byte 0
-	push	27
+	push	byte 27
 	jmp	isr_common_stub
 
 _isr28:
 	cli
 	push	byte 0
-	push	28
+	push	byte 28
 	jmp	isr_common_stub
 
 _isr29:
 	cli
 	push	byte 0
-	push	29
+	push	byte 29
 	jmp	isr_common_stub
 
 _isr30:
 	cli
 	push	byte 0
-	push	30
+	push	byte 30
 	jmp	isr_common_stub
 
 _isr31:
 	cli
 	push	byte 0
-	push	31
+	push	byte 31
 	jmp	isr_common_stub
 
-_isr128:
+_isr127:
 	cli
 	push	byte 0
-	push	128
+	push	byte 127
 	jmp	isr_common_stub
 
 extern isr_handler
@@ -229,8 +229,10 @@ extern isr_handler
 isr_common_stub:
 	pusha
 
-	mov	ax, ds
-	push	eax
+	push	ds
+	push	es
+	push	fs
+	push	gs
 
 	mov	ax, 0x10
 	mov	ds, ax
@@ -238,16 +240,17 @@ isr_common_stub:
 	mov	fs, ax
 	mov	gs, ax
 
-	call	isr_handler
+	mov	eax, esp
+	push	eax
+	mov	eax, isr_handler
+	call	eax
 
 	pop	eax
-	mov	ds, bx
-	mov	es, bx
-	mov 	fs, bx
-	mov	gs, bx
-
+	pop	gs
+	pop	fs
+	pop	es
+	pop	ds
 	popa
-	add	esp, 8
 
-	sti
+	add	esp, 8
 	iret

@@ -26,7 +26,5 @@ typedef void (*isr_t)(registers_t*);
 void init_handlers();
 void interrupt_install_handler(u8int n, isr_t handler, char *msg);
 void interrupt_remove_handler(u8int n);
-void isr_handler(registers_t *r);
-void irq_handler(registers_t *r);
 
 #endif
