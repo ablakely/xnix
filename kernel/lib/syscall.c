@@ -8,6 +8,7 @@
 #include "stdint.h"
 #include "stdio.h"
 #include "stdlib.h"
+#include "panic.h"
 #include <iomem.h>
 #include <tty/console.h>
 #include <tty/colors.h>
@@ -26,7 +27,8 @@ u32int num_syscalls = 1;
 
 void syscall_handler(registers_t *regs)
 {
-	printf("syscall recieved\n");
+	printf("syscall recieved: %x\n", regs->eax);
+	//panic("debugging syscall", regs);
 
 	if (regs->eax >= num_syscalls)
 		return;
@@ -52,6 +54,6 @@ void syscall_handler(registers_t *regs)
 
 void init_syscalls()
 {
-        interrupt_install_handler(0x7f, &syscall_handler, "syscall handler");
+        interrupt_install_handler(0x7f, syscall_handler, "syscall handler");
 }
 
