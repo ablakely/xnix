@@ -48,7 +48,6 @@ all:
 	@$(AS) $(ASFLAGS) kernel/cpu/IA32/idt/idt.s 			-o $(OBJDIR)/idtasm.o
 	@$(AS) $(ASFLAGS) kernel/cpu/IA32/isrs/isrs.s 			-o $(OBJDIR)/isrsasm.o
 	@$(AS) $(ASFLAGS) kernel/cpu/IA32/irqs/irqs.s 			-o $(OBJDIR)/irqsasm.o
-	@$(AS) $(ASFLAGS) kernel/cpu/IA32/tss/tss.s			-o $(OBJDIR)/tssasm.o
 	@$(AS) $(ASFLAGS) kernel/mem/paging.s				-o $(OBJDIR)/pagingasm.o
 	@$(AS) $(ASFLAGS) kernel/proc/process.s				-o $(OBJDIR)/processasm.o
  

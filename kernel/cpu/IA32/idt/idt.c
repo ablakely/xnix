@@ -5,6 +5,7 @@
  */
 
 #include "idt.h"
+#include <stdint.h>
 #include <iomem.h>
 #include <stdio.h>
 #include <tty/console.h>
@@ -14,7 +15,7 @@
 struct idt_entry idt[256];
 struct idt_ptr   idtp;
 
-void idt_set_gate(unsigned char num, unsigned long base, unsigned short sel, unsigned char flags)
+void idt_set_gate(u8int num, u32int base, u16int sel, u8int flags)
 {
 	idt[num].base_lo	= (base & 0xFFFF);
 	idt[num].base_hi	= (base >> 16) & 0xFFFF;
@@ -30,7 +31,7 @@ void idt_install()
 	printc("IDT\n", BLACK, LIGHT_RED);
 
 	idtp.limit	= (sizeof (struct idt_entry) * 256) - 1;
-	idtp.base	= (int)&idt;
+	idtp.base	= (u32int)&idt;
 
 	memset(&idt, 0, sizeof(struct idt_entry) * 256);
 	isrs_install();

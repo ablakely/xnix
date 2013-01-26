@@ -25,6 +25,7 @@ void panic(char *err, struct regs *regs)
 		printf("  eax: ................. %x\n  ebx: ................. %x\n  ecx: ................. %x\n", regs->eax, regs->ebx, regs->ecx);
 		printf("  edx: ................. %x\n  esp: ................. %x\n  ebp: ................. %x\n", regs->edx, regs->esp, regs->ebp);
 		printf("  eip: ................. %x\n  cr0: ................. %x\n  cr3: ................. %x\n", regs->eip, cr0, cr3);
+		printf("  Interrupt Number: .... %x\n", regs->int_no);
 		printf("  Error Code: .......... %x\n", regs->err_code);
 		printf("  EFLAGS: .............. %x\n", regs->eflags);
 		printf("  User ESP: ............ %x\n", regs->useresp);

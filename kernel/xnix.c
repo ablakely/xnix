@@ -59,7 +59,6 @@ int xnix_main(struct multiboot *mboot_ptr, u32int initial_stack)
 
 	syscall_print("Hello world!\n");
 
-
 	// loop forever to keep the system alive
 	for (;;)
 	{

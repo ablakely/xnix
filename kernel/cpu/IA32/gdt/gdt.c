@@ -14,10 +14,10 @@
 
 extern void tss_flush();
 extern void gdt_flush(u32int);
-struct gdt_entry gdt[5];
-struct gdt_ptr   gp;
+gdt_entry_t gdt[6];
+gdt_ptr_t   gp;
 
-void gdt_set_gate(int num, u32int base, u32int limit, u8int access, u8int gran)
+void gdt_set_gate(u32int num, u32int base, u32int limit, u8int access, u8int gran)
 {
 	gdt[num].base_low	= (base & 0xFFFF);
 	gdt[num].base_middle	= (base >> 16) & 0xFF;
@@ -35,7 +35,7 @@ void gdt_install()
 	printc("Installing ", BLACK, LIGHT_GREEN);
 	printc("GDT\n", BLACK, LIGHT_RED);
 
-	gp.limit = (sizeof(struct gdt_entry) * 6) - 1;
+	gp.limit = (sizeof(gdt_entry_t) * 6) - 1;
 	gp.base  = (u32int)&gdt;
 
 	gdt_set_gate(0, 0, 0, 0, 0);

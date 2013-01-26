@@ -2,6 +2,7 @@ global idt_flush
 extern idtp
 
 idt_flush:
-	lidt [idtp]
+	mov eax, [esp+4]
+	lidt [eax]
 	ret
 
