@@ -13,7 +13,7 @@
 
 typedef struct regs
 {
-	u32int	ds;
+	u32int	ds;	// TODO: gs, es, fs? 
 	u32int	edi, esi, ebp, esp, ebx, edx, ecx, eax;
 	u32int	int_no, err_code;
 	u32int	eip, cs, eflags, useresp, ss;
@@ -24,6 +24,7 @@ void outportw(u16int port, u16int val);
 u8int inportb(u16int port);
 u16int inportw(u16int port);
 void *memcpy(void *dest, const void *src, u32int len);
+void *memmove(void *dest, const void *src, u32int len);
 void *memset(void *dest, void *val, u32int len);
 int strlen(char *str);
 char *strcpy(char *dest, const char *src);

@@ -6,7 +6,7 @@ AS = nasm
 LK = i586-elf-ld
 OBJECTS = $(OBJDIR)/*.o
 EXECTUABLE = ./kernel
-CFLAGS = -g -m32 -fstrength-reduce -fno-builtin-puts -fno-builtin-printf -fno-builtin-function -finline-functions -nostdinc -fno-stack-protector -fomit-frame-pointer -nostdlib  $(IDIRS)
+CFLAGS = -g -m32 -fstrength-reduce -fno-builtin-time -fno-builtin-puts -fno-builtin-printf -fno-builtin-function -finline-functions -nostdinc -fno-stack-protector -fomit-frame-pointer -nostdlib  $(IDIRS)
 LDFLAGS = -Tetc/link.ld -melf_i386
 ASFLAGS = -Werror -felf
 IDIRS = -Ikernel/ -Ikernel/lib -Ikernel/io
@@ -41,6 +41,7 @@ all:
 	@$(CC) -m32 -c kernel/fs/initrd.c $(CFLAGS) 			-o $(OBJDIR)/initrd.o
 	@$(CC) -m32 -c kernel/proc/task.c $(CFLAGS)			-o $(OBJDIR)/task.o
 	@$(CC) -m32 -c kernel/lib/syscall.c $(CFLAGS)  			-o $(OBJDIR)/syscall.o
+	@$(CC) -m32 -c kernel/io/rtc/rtc.c $(CFLAGS)			-o $(OBJDIR)/rtc.o
 
 	@echo "Running the assembler..."
 	@$(AS) $(ASFLAGS) kernel/cpu/IA32/boot/prep/head.s 		-o $(OBJDIR)/head.o

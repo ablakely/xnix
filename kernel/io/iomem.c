@@ -47,6 +47,19 @@ void *memcpy(void *dest, const void *src, u32int len)
 	return dest;
 }
 
+void *memmove(void *dest, const void *src, u32int len)
+{
+	char *dst = (char *)dest;
+	char *sc  = (char *)src;
+
+	while (len--)
+	{
+		*dst++ = *sc++;
+	}
+
+	return dest;
+}
+
 void *memset(void *dest, void *val, u32int len)
 {
 	// a /fast/ memset implementation

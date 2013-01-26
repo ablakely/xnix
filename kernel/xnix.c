@@ -22,6 +22,7 @@
 #include <fs/initrd.h>
 #include <proc/task.h>
 #include <syscall.h>
+#include <io/rtc/rtc.h>
 
 #define halt() for(;;);
 extern u32int  start_esp;
@@ -57,12 +58,8 @@ int xnix_main(struct multiboot *mboot_ptr, u32int initial_stack)
 
 	switch_to_user_mode();
 
-	syscall_print("Hello world!\n");
+	syscall_print("Sucuessfully switched to usermode...\n");
 
 	// loop forever to keep the system alive
-	for (;;)
-	{
-		kernel_ticks++;
-
-	}
+	for (;;);
 }
