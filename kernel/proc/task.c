@@ -134,6 +134,19 @@ int getpid()
 	return current_task->id;
 }
 
+/*void task_exit(int retval)
+{
+	if (__builtin_expect(current_task->id == 0, 0))
+	{
+		switch_task();
+		return;
+	}
+
+	current_task->status	= retval;
+	current_task->finished	= 1;
+
+*/
+
 void move_stack(void *new_stack_start, u32int size)
 {
 	u32int i;

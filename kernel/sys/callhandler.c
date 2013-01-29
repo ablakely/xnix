@@ -4,7 +4,7 @@
  *
  */
 
-#include "syscall.h"
+#include "callhandler.h"
 #include "stdint.h"
 #include "stdio.h"
 #include "stdlib.h"
@@ -28,7 +28,9 @@ u32int num_syscalls = 1;
 void syscall_handler(registers_t *regs)
 {
 	printf("syscall recieved: %x\n", regs->eax);
-	//panic("debugging syscall", regs);
+
+//	panic("\nTesting PANIC function.\n", regs);
+
 
 	if (regs->eax >= num_syscalls)
 		return;

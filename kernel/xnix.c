@@ -9,6 +9,7 @@
 #include <stdint.h>
 #include <panic.h>
 #include <boot/multiboot.h>
+#include <boot/param_parser.h>
 #include <tty/console.h>
 #include <tty/spinner.h>
 #include <tty/colors.h>
@@ -21,7 +22,7 @@
 #include <fs/fs.h>
 #include <fs/initrd.h>
 #include <proc/task.h>
-#include <syscall.h>
+#include <sys/callhandler.h>
 #include <io/rtc/rtc.h>
 
 #define halt() for(;;);
@@ -32,6 +33,7 @@ int xnix_main(struct multiboot *mboot_ptr, u32int initial_stack)
 	extern u32int placement_address;
 	int kernel_ticks 	= 0;
 	start_esp		= initial_stack;
+
 
 	init_console();
 	print("xnix 0.0.1 (by Aaron Blakely)\n\n");

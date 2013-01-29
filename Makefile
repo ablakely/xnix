@@ -40,8 +40,10 @@ all:
 	@$(CC) -m32 -c kernel/fs/fs.c $(CFLAGS) 			-o $(OBJDIR)/fs.o
 	@$(CC) -m32 -c kernel/fs/initrd.c $(CFLAGS) 			-o $(OBJDIR)/initrd.o
 	@$(CC) -m32 -c kernel/proc/task.c $(CFLAGS)			-o $(OBJDIR)/task.o
-	@$(CC) -m32 -c kernel/lib/syscall.c $(CFLAGS)  			-o $(OBJDIR)/syscall.o
+	@$(CC) -m32 -c kernel/sys/callhandler.c $(CFLAGS) 		-o $(OBJDIR)/callhandler.o
 	@$(CC) -m32 -c kernel/io/rtc/rtc.c $(CFLAGS)			-o $(OBJDIR)/rtc.o
+# TODO:	@$(CC) -m32 -c kernel/boot/param_parser.c $(CFLAGS)             -o $(OBJDIR)/param_parser.o
+
 
 	@echo "Running the assembler..."
 	@$(AS) $(ASFLAGS) kernel/cpu/IA32/boot/prep/head.s 		-o $(OBJDIR)/head.o
