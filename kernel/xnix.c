@@ -60,7 +60,7 @@ int xnix_main(struct multiboot *mboot_ptr, u32int initial_stack)
 
 	switch_to_user_mode();
 
-	syscall_print("Sucuessfully switched to usermode...\n");
+	syscall_print("Sucuessfully switched to usermode... :)\n");
 
 	// loop forever to keep the system alive
 	for (;;);

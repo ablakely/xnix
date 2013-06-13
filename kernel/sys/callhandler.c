@@ -27,10 +27,6 @@ u32int num_syscalls = 1;
 
 void syscall_handler(registers_t *regs)
 {
-	printf("syscall recieved: %x\n", regs->eax);
-
-//	panic("\nTesting PANIC function.\n", regs);
-
 
 	if (regs->eax >= num_syscalls)
 		return;
