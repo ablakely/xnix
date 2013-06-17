@@ -3,6 +3,7 @@
 
 #include <stdint.h>
 #include <iomem.h>
+#include "IA32.h"
 
 #define IRQ0 32
 #define IRQ1 33

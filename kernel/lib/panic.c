@@ -10,6 +10,7 @@
 #include <tty/console.h>
 #include <tty/spinner.h>
 #include <tty/colors.h>
+#include <cpu/IA32/IA32.h>
 
 void panic(char *err, registers_t *regs)
 {

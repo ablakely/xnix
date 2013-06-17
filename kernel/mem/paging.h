@@ -3,6 +3,7 @@
 
 #include <stdint.h>
 #include <iomem.h>
+#include <cpu/IA32/IA32.h>
 
 u32int start_esp;
 

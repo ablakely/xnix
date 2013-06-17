@@ -11,14 +11,6 @@
 #define FALSE 0
 #endif
 
-typedef struct regs
-{
-	u32int	ds;	// TODO: gs, es, fs? 
-	u32int	edi, esi, ebp, esp, ebx, edx, ecx, eax;
-	u32int	int_no, err_code;
-	u32int	eip, cs, eflags, useresp, ss;
-} registers_t;
-
 void outportb(u16int port, u8int val);
 void outportw(u16int port, u16int val);
 u8int inportb(u16int port);

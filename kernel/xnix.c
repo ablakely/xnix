@@ -36,7 +36,7 @@ int xnix_main(struct multiboot *mboot_ptr, u32int initial_stack)
 
 
 	init_console();
-	print("xnix 0.0.1 (by Aaron Blakely)\n\n");
+	print("xnix 0.0.2 (by Aaron Blakely)\n\n");
 
 	init_descriptors();
 
