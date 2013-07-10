@@ -1,8 +1,9 @@
-#ifndef KBBUFFER
-#define KBBUFFER
+#ifndef KBBUFFER_H
+#define KBBUFFER_H
 
+#define KB_BUF_LEN 1024
 
-// a good size?
-char kbbuffer[4096];
+void init_kbbuffer();
+void put_kbbuf(char c);
 
 #endif

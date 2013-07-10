@@ -47,10 +47,10 @@ void keyboard_handler(struct regs *r)
 		else {
 			if (state == 1)
 			{
-				//put_c(uckbmap[scancode], BLACK, WHITE);
+				put_kbbuf(uckbmap[scancode]);
 			}
 			else {
-				//put_c(kbmap[scancode], BLACK, WHITE);
+				put_kbbuf(kbmap[scancode]);
 			}
 		}
 	}
@@ -59,4 +59,5 @@ void keyboard_handler(struct regs *r)
 void keyboard_install()
 {
 	interrupt_install_handler(IRQ1, keyboard_handler, "keyboard");
+	init_kbbuffer();
 }

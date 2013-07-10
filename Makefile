@@ -29,6 +29,7 @@ all:
 	@$(CC) -m32 -c kernel/cpu/IA32/handlers.c $(CFLAGS) 		-o $(OBJDIR)/handlers.o
 	@$(CC) -m32 -c kernel/cpu/IA32/tss/tss.c $(CFLAGS)		-o $(OBJDIR)/tss.o
 	@$(CC) -m32 -c kernel/io/kb/kb.c $(CFLAGS) 			-o $(OBJDIR)/kb.o
+	@$(CC) -m32 -c kernel/io/kb/kbbuffer.c $(CFLAGS)		-o $(OBJDIR)/kbbuffer.o
 	@$(CC) -m32 -c kernel/io/kb/layouts/us/qwerty/map.c $(CFLAGS) 	-o $(OBJDIR)/qwerty.o
 	@$(CC) -m32 -c kernel/io/pit/pit.c $(CFLAGS) 			-o $(OBJDIR)/pit.o
 	@$(CC) -m32 -c kernel/tty/spinner.c $(CFLAGS) 			-o $(OBJDIR)/spinner.o
@@ -43,7 +44,6 @@ all:
 	@$(CC) -m32 -c kernel/sys/callhandler.c $(CFLAGS) 		-o $(OBJDIR)/callhandler.o
 	@$(CC) -m32 -c kernel/io/rtc/rtc.c $(CFLAGS)			-o $(OBJDIR)/rtc.o
 # TODO:	@$(CC) -m32 -c kernel/boot/param_parser.c $(CFLAGS)             -o $(OBJDIR)/param_parser.o
-
 
 	@echo "Running the assembler..."
 	@$(AS) $(ASFLAGS) kernel/cpu/IA32/boot/prep/head.s 		-o $(OBJDIR)/head.o
