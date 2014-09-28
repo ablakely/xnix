@@ -13,17 +13,27 @@
 #include <tty/console.h>
 #include <tty/colors.h>
 #include <cpu/IA32/handlers.h>
+#include <proc/task.h>
 
 void syscall_handler(registers_t *regs);
 
-DEFN_SYSCALL1(print, 0, char*);
+DEFN_SYSCALL1(put, 0, char*);
+DEFN_SYSCALL0(getpid, 1);
+DEFN_SYSCALL1(console_writedec, 2, u32int);
+DEFN_SYSCALL1(console_writehex, 3, u32int);
+DEFN_SYSCALL0(fork, 4);
 
-void *syscalls[1] =
+void *syscalls[5] =
 {
-	&print,
+	&put,
+	&getpid,
+	&console_writedec,
+	&console_writehex,
+	&fork,
+
 };
 
-u32int num_syscalls = 1;
+u32int num_syscalls = 5;
 
 void syscall_handler(registers_t *regs)
 {

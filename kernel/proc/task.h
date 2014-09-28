@@ -14,6 +14,8 @@ typedef struct task
 	page_directory_t	*page_directory;	// Page directory
 	u32int			kernel_stack;
 	struct task		*next;			// next task in linked list
+	int status;
+	int finished;
 } task_t;
 
 void 	initialise_tasking();

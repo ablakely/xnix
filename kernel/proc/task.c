@@ -212,4 +212,3 @@ void switch_to_user_mode()
 	1:				");
 
 }
-

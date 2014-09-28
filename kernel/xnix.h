@@ -19,6 +19,8 @@
 #include <fs/initrd.h>
 #include <proc/task.h>
 #include <sys/callhandler.h>
+#include <sys/syscall.h>
 #include <io/rtc/rtc.h>
+
 
 #endif

@@ -15,7 +15,7 @@
 int syscall_##fn()															\
 {																	\
 	int a;																\
-	asm volatile("int $0x7f" : "=a" (a) : "0" (num))										\
+	asm volatile("int $0x7f" : "=a" (a) : "0" (num));										\
 	return a;															\
 }
 

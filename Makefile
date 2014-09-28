@@ -42,6 +42,7 @@ all:
 	@$(CC) -m32 -c kernel/fs/initrd.c $(CFLAGS) 			-o $(OBJDIR)/initrd.o
 	@$(CC) -m32 -c kernel/proc/task.c $(CFLAGS)			-o $(OBJDIR)/task.o
 	@$(CC) -m32 -c kernel/sys/callhandler.c $(CFLAGS) 		-o $(OBJDIR)/callhandler.o
+	@$(CC) -m32 -c kernel/sys/syscall.c $(CFLAGS)           -o $(OBJDIR)/syscall.o
 	@$(CC) -m32 -c kernel/io/rtc/rtc.c $(CFLAGS)			-o $(OBJDIR)/rtc.o
 # TODO:	@$(CC) -m32 -c kernel/boot/param_parser.c $(CFLAGS)             -o $(OBJDIR)/param_parser.o
 

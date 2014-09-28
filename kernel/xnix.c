@@ -40,6 +40,10 @@ int xnix_main(struct multiboot *mboot_ptr, u32int initial_stack)
 	init_syscalls();
 
 	switch_to_user_mode();
+	xprintf("Current task id: %d\n", syscall_getpid());
+
+	xprintf("Forking into task: %d\n", syscall_fork());
+	xprintf("Current task id: %d\n", syscall_getpid());
 
 	// loop forever to keep the system alive
 	for (;;);
