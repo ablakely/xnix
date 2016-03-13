@@ -122,15 +122,15 @@ void init_paging()
 	}
 
 	i = 0;
-	while (i < placement_address+0x1000)
+	while (i < 0x400000)
 	{
-		alloc_frame(get_page(i, 1, kernel_directory), 0, 0);
+		alloc_frame(get_page(i, 1, kernel_directory), 0, 0);  // is kernel: 1, is writeable: 1
 		i += 0x1000;
 	}
 
 	for (i = XNIX_HEAP_START; i < XNIX_HEAP_START + XNIX_HEAP_INITIAL_SIZE; i += 0x1000)
 	{
-		alloc_frame(get_page(i, 1, kernel_directory), 0, 0);
+		alloc_frame(get_page(i, 1, kernel_directory), 0, 0); // is kernel: 1, is writeable: 1
 	}
 
 	interrupt_install_handler(14, page_fault, "page fault handler");
@@ -194,7 +194,7 @@ void page_fault(struct regs *r)
         if (us)         printf("usermode, ");
         if (reserved)   printf("reserved");
 
-        printf(") at address: %x\n", faulting_address);
+        printf(") at address (cr2): %x\n", faulting_address);
 	panic("Page Fault detected.", r);
 }
 

@@ -11,6 +11,7 @@
 #include <stdio.h>
 
 extern u32int end;
+extern page_directory_t *kernel_directory;
 extern heap_t *xnix_heap;
 
 u32int placement_address = (u32int)&end;

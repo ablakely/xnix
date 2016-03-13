@@ -5,7 +5,7 @@
 
 typedef struct regs
 {
-	u32int	ds;	// TODO: gs, es, fs?
+	u32int	ds;
 	u32int	edi, esi, ebp, useresp, ebx, edx, ecx, eax;
 	u32int	int_no, err_code;
 	u32int	eip, cs, eflags, esp, ss;

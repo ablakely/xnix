@@ -14,23 +14,23 @@
 
 void panic(char *err, registers_t *regs)
 {
-        print("\n\n");
+  printf("\n\n");
 	printf("PANIC: %s\n", err);
 
 	if (regs)
 	{
-		u32int cr0, cr3;
+		u32int cr0, cr2, cr3;
 		asm volatile("mov %%cr0, %0" : "=r"(cr0));
 		asm volatile("mov %%cr3, %0" : "=r"(cr3));
 
-		printf("\n\nRegister states at interrupt:\n");
+		printf("\n\nRegister states at panic():\n");
 		printf("  eax: ................. %x\n  ebx: ................. %x\n  ecx: ................. %x\n", regs->eax, regs->ebx, regs->ecx);
 		printf("  edx: ................. %x\n  esp: ................. %x\n  ebp: ................. %x\n", regs->edx, regs->esp, regs->ebp);
 		printf("  eip: ................. %x\n  cr0: ................. %x\n  cr3: ................. %x\n", regs->eip, cr0, cr3);
 		printf("  Interrupt Number: .... %x\n", regs->int_no);
 		printf("  Error Code: .......... %x\n", regs->err_code);
 		printf("  EFLAGS: .............. %x\n", regs->eflags);
-		printf("  User ESP: ............ %x\n", regs->useresp);
+		printf("  Useless Value: ....... %x\n", regs->useresp);
 	}
 
 	print("\n");

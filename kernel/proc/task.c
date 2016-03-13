@@ -1,10 +1,12 @@
-/*
+ /*
  * xnix: a small play kernel
  * Written by Aaron Blakely <aaron@ephasic.org>
  *
  */
 
 #include "task.h"
+#include <sys/syscall.h>
+#include <cpu/IA32/tss/tss.h>
 #include <mem/paging.h>
 #include <mem/heap.h>
 #include <mem/malloc.h>
@@ -79,6 +81,7 @@ int fork()
 	}
 	else
 	{
+		asm volatile("sti");
 		return 0;
 	}
 }
@@ -190,20 +193,27 @@ void switch_to_user_mode()
 	set_kernel_stack(current_task->kernel_stack+KERNEL_STACK_SIZE);
 
 	printf("Attempting to switch to user mode.\n");
-	asm volatile("			\
-		mov $0x23, %ax;		\
-		mov %ax, %ds;		\
-		mov %ax, %es;		\
-		mov %ax, %fs;		\
-		mov %ax, %gs;		\
-					\
-		mov %esp, %eax;		\
-		push $0x23;		\
-		push %eax;		\
-		pushf;			\
-		push $0x1B;		\
-		push $1f;		\
-		iret;			\
-	1:				");
+	asm volatile("  \
+		cli; \
+		mov $0x23, %ax; \
+		mov %ax, %ds; \
+		mov %ax, %es; \
+		mov %ax, %fs; \
+		mov %ax, %gs; \
+								\
+	  mov %esp, %eax; \
+		pushl $0x23; \
+		pushl %eax; \
+    \
+		pushf; \
+		pushl $0x1B; \
+		push $1f; \
+		iret; \
+		1: \
+	");
 
+}
+
+void usermode_initd() {
+	xprintf("Entered usermode!\n");
 }
