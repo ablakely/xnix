@@ -1,0 +1,25 @@
+xnix 0.0.2 (by Aaron Blakely)
+Attempting to switch to user mode.
+Current task id: 1
+Page Fault detected: (present, ) at address: 0xbf18e000
+
+
+PANIC: Page Fault detected.
+
+
+Register states at interrupt:
+  eax: ................. 0xbf18e000
+  ebx: ................. 0x1ab
+  ecx: ................. 0x1006df
+  edx: ................. 0x0
+  esp: ................. 0xc00816a8
+  ebp: ................. 0xe0000014
+  eip: ................. 0x102fd2
+  cr0: ................. 0xe0000011
+  cr3: ................. 0x1a4000
+  Interrupt Number: .... 0xe
+  Error Code: .......... 0x0
+  EFLAGS: .............. 0x10093
+  User ESP: ............ 0x2004
+
+

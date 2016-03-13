@@ -14,6 +14,7 @@
 
 void panic(char *err, registers_t *regs)
 {
+        print("\n\n");
 	printf("PANIC: %s\n", err);
 
 	if (regs)
