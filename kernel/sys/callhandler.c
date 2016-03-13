@@ -15,6 +15,11 @@
 #include <cpu/IA32/handlers.h>
 #include <proc/task.h>
 
+void xexit(int retv)
+{
+	task_exit(retv);
+}
+
 void syscall_handler(registers_t *regs);
 
 DEFN_SYSCALL1(put, 0, char*);
@@ -22,18 +27,19 @@ DEFN_SYSCALL0(getpid, 1);
 DEFN_SYSCALL1(console_writedec, 2, u32int);
 DEFN_SYSCALL1(console_writehex, 3, u32int);
 DEFN_SYSCALL0(fork, 4);
+DEFN_SYSCALL1(xexit, 5, int);
 
-void *syscalls[5] =
+void *syscalls[6] =
 {
 	&put,
 	&getpid,
 	&console_writedec,
 	&console_writehex,
 	&fork,
-
+	&xexit,
 };
 
-u32int num_syscalls = 5;
+u32int num_syscalls = 6;
 
 void syscall_handler(registers_t *regs)
 {
@@ -64,4 +70,3 @@ void init_syscalls()
 {
         interrupt_install_handler(0x7f, syscall_handler, "syscall handler");
 }
-

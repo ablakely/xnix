@@ -20,6 +20,7 @@ typedef struct task
 
 void 	initialise_tasking();
 void 	task_switch();
+void  task_exit(int retval);
 int 	fork();
 void 	move_stack(void *new_stack_start, u32int size);
 int 	getpid();
